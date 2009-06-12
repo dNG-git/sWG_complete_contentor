@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<swg_lang_file_v1>
+
+<contentor>
+
+ <cat>
+  <input input="string" value="" />
+  <desc><empty><input input="string" value="" /></empty></desc>
+ </cat>
+
+ <cats><input input="string" value="" /></cats>
+
+ <doc>
+
+  <input input="string" value="" />
+
+  <edit>
+   <input input="string" value="" />
+   <current><input input="string" value="" /></current>
+   <pub><datetime><input input="string" value="" /></datetime></pub>
+  </edit>
+
+  <dright>
+   <digitstart__0><input input="string" value="" /></digitstart__0>
+   <r><input input="string" value="" /></r>
+   <w><input input="string" value="" /></w>
+  </dright>
+
+  <first><multipage><input input="string" value="" /></multipage></first>
+  <gright><input input="string" value="" /></gright>
+  <info><input input="string" value="" /></info>
+
+  <last><edit>
+   <digitstart__1><input input="string" value="" /></digitstart__1>
+   <digitstart__2><input input="string" value="" /></digitstart__2>
+  </edit></last>
+
+  <lock><input input="string" value="" /></lock>
+
+  <new>
+   <input input="string" value="" />
+   <edited><input input="string" value="" /></edited>
+  </new>
+
+  <on><frontpage><input input="string" value="" /></frontpage></on>
+  <pright><input input="string" value="" /></pright>
+  <public><input input="string" value="" /></public>
+
+  <publish><input input="string" value="" /></publish>
+
+  <published>
+   <input input="string" value="" />
+   <digitstart__1><input input="string" value="" /></digitstart__1>
+   <digitstart__2><input input="string" value="" /></digitstart__2>
+   <digitstart__3><input input="string" value="" /></digitstart__3>
+  </published>
+
+  <stick><input input="string" value="" /></stick>
+  <sticky><input input="string" value="" /></sticky>
+  <submit><input input="string" value="" /></submit>
+  <unlock><input input="string" value="" /></unlock>
+  <unstick><input input="string" value="" /></unstick>
+
+  <views>
+   <count><input input="string" value="" /></count>
+   <digitstart__1><input input="string" value="" /></digitstart__1>
+   <digitstart__2><input input="string" value="" /></digitstart__2>
+   <inactive><input input="string" value="" /></inactive>
+  </views>
+
+ </doc>
+
+ <docs>
+
+  <input input="string" value="" />
+  <desc><input input="string" value="" /></desc>
+
+  <list>
+   <input input="string" value="" />
+   <empty><input input="string" value="" /></empty>
+  </list>
+
+ </docs>
+
+ <docv><list><input input="string" value="" /></list></docv>
+
+ <done><doc>
+  <change><state><input input="string" value="" /></state></change>
+  <edit><input input="string" value="" /></edit>
+  <new><input input="string" value="" /></new>
+  <publish><input input="string" value="" /></publish>
+  <submit><input input="string" value="" /></submit>
+ </doc></done>
+
+ <preview><input input="string" value="" /></preview>
+ <pubdate><input input="string" value="" /></pubdate>
+ <pubtime><input input="string" value="" /></pubtime>
+
+ <symbol>
+  <input input="string" value="" />
+  <select><input input="string" value="" /></select>
+ </symbol>
+
+ <symbols>
+  <input input="string" value="" />
+  <empty><input input="string" value="" /></empty>
+ </symbols>
+
+ <teaser><input input="string" value="" /></teaser>
+ <text><input input="string" value="" /></text>
+ <title><input input="string" value="" /></title>
+ <views><inactive><input input="string" value="" /></inactive></views>
+
+</contentor>
+
+<errors><contentor>
+ <cid><invalid><input input="string" value="" /></invalid></cid>
+ <did><invalid><input input="string" value="" /></invalid></did>
+</contentor></errors>
+
+</swg_lang_file_v1>
