@@ -373,7 +373,7 @@ Set up an additional post class element :)
 
 		$f_return = false;
 
-		if (count ($this->data) > 1) { $f_return =& $this->data; }
+		if (count ($this->data) > 1) { $f_return = $this->data; }
 		elseif ((is_array ($f_values))||(is_string ($f_values)))
 		{
 $f_select_attributes = array ($direct_settings['contentor_docs_table'].".*",$direct_settings['data_table'].".ddbdata_sid",$direct_settings['data_table'].".ddbdata_mode_user",$direct_settings['data_table'].".ddbdata_mode_group",$direct_settings['data_table'].".ddbdata_mode_all",
@@ -413,7 +413,7 @@ array ("type" => "left-outer-join","table" => $direct_settings['users_table']." 
 				if (($this->data_readable)||($this->data_readable_group))
 				{
 					if ($f_content) { $this->get_document_structure ($this->data['ddbdata_data']); }
-					$f_return =& $this->data;
+					$f_return = $this->data;
 				}
 			}
 		}
