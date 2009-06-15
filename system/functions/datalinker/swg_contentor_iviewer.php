@@ -111,7 +111,7 @@ function direct_datalinker_contentor_iviewer ($f_viewer_data,&$f_object)
 
 //f// direct_datalinker_contentor_iviewer_cat ($f_viewer_data,&$f_object)
 /**
-* iviewer for direct_contentor_board objects.
+* iviewer for direct_contentor_cat objects.
 *
 * @param  array $f_viewer_data Found iviewer entry
 * @param  direct_datalinker &$f_object DataLinker object
@@ -163,7 +163,7 @@ $f_return = array (
 		{
 			$f_parent_pointer = new direct_contentor_cat ();
 
-			if ($f_object_array['ddbdatalinker_id_main'])
+			if ($f_object_array['ddbdatalinker_id_parent'])
 			{
 				if ($f_parent_pointer)
 				{
@@ -214,7 +214,7 @@ $f_return = array (
 
 //f// direct_datalinker_contentor_iviewer_doc ($f_viewer_data,&$f_object)
 /**
-* iviewer for direct_contentor_post objects.
+* iviewer for direct_contentor_doc objects.
 *
 * @param  array $f_viewer_data Found iviewer entry
 * @param  direct_datalinker &$f_object DataLinker object
