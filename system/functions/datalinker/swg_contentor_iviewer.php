@@ -161,14 +161,14 @@ $f_return = array (
 
 		if (is_array ($f_object_array))
 		{
-			$f_parent_pointer = new direct_contentor_cat ();
+			$f_parent_object = new direct_contentor_cat ();
 
 			if ($f_object_array['ddbdatalinker_id_parent'])
 			{
-				if ($f_parent_pointer)
+				if ($f_parent_object)
 				{
-					$f_parent_array = $f_parent_pointer->get ($f_object_array['ddbdatalinker_id_parent']);
-					$f_parent_check = $f_parent_pointer->is_readable ();
+					$f_parent_array = $f_parent_object->get ($f_object_array['ddbdatalinker_id_parent']);
+					$f_parent_check = $f_parent_object->is_readable ();
 				}
 			}
 			else { $f_parent_check = false; }
@@ -198,7 +198,7 @@ $f_return = array (
 
 			if (($f_parent_check)&&(is_array ($f_parent_array))&&($f_parent_array['ddbcontentor_cats_doctype'] != "all"))
 			{
-				$f_parsed_array = $f_parent_pointer->parse ("m=contentor&a=[a]&dsd=[oid][page]");
+				$f_parsed_array = $f_parent_object->parse ("m=contentor&a=[a]&dsd=[oid][page]");
 				$f_return['category_id'] = $f_parsed_array['oid'];
 				$f_return['category_title_type'] = direct_local_get ("contentor_cat");
 				$f_return['category_title'] = $f_parsed_array['title'];
@@ -276,20 +276,18 @@ $f_return = array (
 
 		if (is_array ($f_doc_array))
 		{
-			$f_cat_pointer = new direct_contentor_cat ();
+			$f_cat_object = new direct_contentor_cat ();
 
 			if ($f_doc_array['ddbdatalinker_id_main'])
 			{
-				if ($f_cat_pointer) { $f_cat_array = $f_cat_pointer->get ($f_doc_array['ddbdatalinker_id_main']); }
+				if ($f_cat_object) { $f_cat_array = $f_cat_object->get ($f_doc_array['ddbdatalinker_id_main']); }
 			}
 			else { $f_subs_check = true; }
 		}
 
 		if ((($f_subs_check)||(!is_array ($f_cat_array)))&&(!is_array ($f_doc_array))) { $f_return['object_desc'] = direct_local_get ("errors_contentor_did_invalid"); }
-		elseif (($f_object->is_readable ())&&(($f_subs_check)||($f_cat_pointer->is_readable ())))
+		elseif (($f_object->is_readable ())&&(($f_subs_check)||($f_cat_object->is_readable ())))
 		{
-			$f_extended_check = false;
-			
 			if ($f_doc_array['ddbcontentor_docs_doctype'] == "all") { $f_parsed_array = $f_object->parse ("m=datalinker&dsd=deid+[oid]"); }
 			else { $f_parsed_array = $f_object->parse ("m=contentor&a=[a]&dsd=[oid][page]"); }
 
@@ -319,7 +317,7 @@ $f_return = array (
 
 			if ((!$f_subs_check)&&($f_cat_array['ddbcontentor_cats_doctype'] != "all"))
 			{
-				$f_parsed_array = $f_cat_pointer->parse ("m=contentor&a=[a]&dsd=[oid][page]");
+				$f_parsed_array = $f_cat_object->parse ("m=contentor&a=[a]&dsd=[oid][page]");
 				$f_return['category_id'] = $f_parsed_array['oid'];
 				$f_return['category_title_type'] = direct_local_get ("contentor_cat");
 				$f_return['category_title'] = $f_parsed_array['title'];
