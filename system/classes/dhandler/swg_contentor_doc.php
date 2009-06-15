@@ -239,14 +239,17 @@ Set up an additional post class element :)
 		if (USE_debug_reporting) { direct_debug (5,"sWG/#echo(__FILEPATH__)# -contentor_doc->define_lock (+f_state,+f_update)- (#echo(__LINE__)#)"); }
 		$f_return = false;
 
-		if (((is_bool ($f_state))||(is_string ($f_state)))&&($f_state)) { $f_return = true; }
-		elseif (($f_state === NULL)&&(!$this->data['ddbcontentor_docs_locked'])) { $f_return = true; }
+		if (count ($this->data) > 1)
+		{
+			if (((is_bool ($f_state))||(is_string ($f_state)))&&($f_state)) { $f_return = true; }
+			elseif (($f_state === NULL)&&(!$this->data['ddbcontentor_docs_locked'])) { $f_return = true; }
 
-		if ($f_return) { $this->data['ddbcontentor_docs_locked'] = 1; }
-		else { $this->data['ddbcontentor_docs_locked'] = 0; }
+			if ($f_return) { $this->data['ddbcontentor_docs_locked'] = 1; }
+			else { $this->data['ddbcontentor_docs_locked'] = 0; }
 
-		$this->data_changed['ddbcontentor_docs_locked'] = true;	
-		if ($f_update) { $this->update (false,true); }
+			$this->data_changed['ddbcontentor_docs_locked'] = true;	
+			if ($f_update) { $this->update (false,true); }
+		}
 
 		return /*#ifdef(DEBUG):direct_debug (7,"sWG/#echo(__FILEPATH__)# -contentor_doc->define_lock ()- (#echo(__LINE__)#)",:#*/$f_return/*#ifdef(DEBUG):,true):#*/;
 	}
@@ -290,14 +293,17 @@ Set up an additional post class element :)
 		if (USE_debug_reporting) { direct_debug (5,"sWG/#echo(__FILEPATH__)# -contentor_doc->define_stick (+f_state,+f_update)- (#echo(__LINE__)#)"); }
 		$f_return = false;
 
-		if (((is_bool ($f_state))||(is_string ($f_state)))&&($f_state)) { $f_return = true; }
-		elseif (($f_state === NULL)&&(!$this->data['ddbdatalinker_position'])) { $f_return = true; }
+		if (count ($this->data) > 1)
+		{
+			if (((is_bool ($f_state))||(is_string ($f_state)))&&($f_state)) { $f_return = true; }
+			elseif (($f_state === NULL)&&(!$this->data['ddbdatalinker_position'])) { $f_return = true; }
 
-		if ($f_return) { $this->data['ddbdatalinker_position'] = 1; }
-		else { $this->data['ddbdatalinker_position'] = 0; }
+			if ($f_return) { $this->data['ddbdatalinker_position'] = 1; }
+			else { $this->data['ddbdatalinker_position'] = 0; }
 
-		$this->data_changed['ddbdatalinker_position'] = true;	
-		if ($f_update) { parent::update (true,false); }
+			$this->data_changed['ddbdatalinker_position'] = true;	
+			if ($f_update) { parent::update (true,false); }
+		}
 
 		return /*#ifdef(DEBUG):direct_debug (7,"sWG/#echo(__FILEPATH__)# -contentor_doc->define_stick ()- (#echo(__LINE__)#)",:#*/$f_return/*#ifdef(DEBUG):,true):#*/;
 	}
@@ -781,7 +787,7 @@ array ("type" => "left-outer-join","table" => $direct_settings['users_table']." 
 
 		$f_return = parent::parse ($f_prefix);
 
-		if (($f_return)&&($this->data_readable)&&(is_array ($this->data))&&(!empty ($this->data)))
+		if (($f_return)&&($this->data_readable)&&(count ($this->data) > 1))
 		{
 			$f_return[$f_prefix."id"] = "swgdhandlercontentordoc".$this->data['ddbdatalinker_id'];
 
@@ -1083,7 +1089,7 @@ $f_attributes = array ("ddbcontentor_docs_id_front","ddbcontentor_docs_owner_id"
 			$direct_classes['db']->v_transaction_begin ();
 			$f_return = parent::update ($f_doc_settings,$f_doc_settings,false);
 
-			if (($f_return)&&(is_array ($this->data))&&(!empty ($this->data)))
+			if (($f_return)&&(count ($this->data) > 1))
 			{
 				if (($f_doc_settings)&&($this->is_changed (array ("ddbcontentor_docs_id_front","ddbcontentor_docs_owner_id","ddbcontentor_docs_owner_ip","ddbcontentor_docs_author_id","ddbcontentor_docs_author_ip","ddbcontentor_docs_time","ddbcontentor_docs_desc","ddbcontentor_docs_doctype","ddbcontentor_docs_pages","ddbcontentor_docs_locked","ddbcontentor_docs_public"))))
 				{
@@ -1198,7 +1204,7 @@ $f_attributes = array ("ddbcontentor_docs_id_front","ddbcontentor_docs_owner_id"
 
 		$f_return = $direct_classes['db']->v_transaction_begin ();
 
-		if ((is_array ($this->data))&&(!empty ($this->data)))
+		if (count ($this->data) > 1)
 		{
 			$direct_classes['db']->init_update ($direct_settings['datalinker_table']);
 

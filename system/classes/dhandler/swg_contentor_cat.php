@@ -257,14 +257,17 @@ Set up an additional board class elements :)
 		if (USE_debug_reporting) { direct_debug (5,"sWG/#echo(__FILEPATH__)# -contentor_cat->define_lock (+f_state,+f_update)- (#echo(__LINE__)#)"); }
 		$f_return = false;
 
-		if (((is_bool ($f_state))||(is_string ($f_state)))&&($f_state)) { $f_return = true; }
-		elseif (($f_state === NULL)&&(!$this->data['ddbcontentor_cats_locked'])) { $f_return = true; }
+		if (count ($this->data) > 1)
+		{
+			if (((is_bool ($f_state))||(is_string ($f_state)))&&($f_state)) { $f_return = true; }
+			elseif (($f_state === NULL)&&(!$this->data['ddbcontentor_cats_locked'])) { $f_return = true; }
 
-		if ($f_return) { $this->data['ddbcontentor_cats_locked'] = 1; }
-		else { $this->data['ddbcontentor_cats_locked'] = 0; }
+			if ($f_return) { $this->data['ddbcontentor_cats_locked'] = 1; }
+			else { $this->data['ddbcontentor_cats_locked'] = 0; }
 
-		$this->data_changed['ddbcontentor_cats_locked'] = true;
-		if ($f_update) { $this->update (); }
+			$this->data_changed['ddbcontentor_cats_locked'] = true;
+			if ($f_update) { $this->update (); }
+		}
 
 		return /*#ifdef(DEBUG):direct_debug (7,"sWG/#echo(__FILEPATH__)# -contentor_cat->define_lock ()- (#echo(__LINE__)#)",:#*/$f_return/*#ifdef(DEBUG):,true):#*/;
 	}
@@ -660,7 +663,7 @@ $f_select_criteria = ("<sub1 type='sublevel'>
 
 		$f_return = parent::parse ($f_prefix);
 
-		if (($f_return)&&($this->data_readable)&&(is_array ($this->data))&&(!empty ($this->data)))
+		if (($f_return)&&($this->data_readable)&&(count ($this->data) > 1))
 		{
 			$f_return[$f_prefix."id"] = "swgdhandlercontentorcat".$this->data['ddbdatalinker_id'];
 
@@ -870,7 +873,7 @@ $f_select_criteria = ("<sub1 type='sublevel'>
 			$direct_classes['db']->v_transaction_begin ();
 			$f_return = parent::update (true,true,false);
 
-			if (($f_return)&&(is_array ($this->data))&&(!empty ($this->data)))
+			if (($f_return)&&(count ($this->data) > 1))
 			{
 				if ($this->is_changed (array ("ddbcontentor_cats_desc","ddbcontentor_cats_owner_group","ddbcontentor_cats_vcontrol","ddbcontentor_cats_front_page","ddbcontentor_cats_front_id","ddbcontentor_cats_doctype","ddbcontentor_cats_locked","ddbcontentor_cats_public","ddbcontentor_cats_moderated","ddbcontentor_cats_submissions")))
 				{
