@@ -92,7 +92,7 @@ class direct_subkernel_contentor extends direct_virtual_class
 Extend the class
 ------------------------------------------------------------------------- */
 
-	//f// direct_subkernel_contentor->__construct () and direct_subkernel_contentor->direct_subkernel_contentor ()
+	//f// direct_subkernel_contentor->__construct ()
 /**
 	* Constructor (PHP5) __construct (direct_subkernel_contentor)
 	*
@@ -157,7 +157,7 @@ Informing the system about the available function
 		}
 
 		if (defined ("CLASS_direct_output_control")) { direct_output_theme ($direct_settings['theme']); }
-		/*PHPr*/ return $f_return; /*PHPd return direct_debug (7,"sWG/#echo(__FILEPATH__)# -kernel_class->subkernel_init ()- (#echo(__LINE__)#)",$f_return,true);*/
+		return /*#ifdef(DEBUG):direct_debug (7,"sWG/#echo(__FILEPATH__)# -kernel_class->subkernel_init ()- (#echo(__LINE__)#)",:#*/$f_return/*#ifdef(DEBUG):,true):#*/;
 	}
 }
 
