@@ -184,7 +184,7 @@ Informing the system about available functions
 		$this->functions['remove_docs'] = true;
 
 /* -------------------------------------------------------------------------
-Set up an additional board class elements :)
+Set up an additional variables :)
 ------------------------------------------------------------------------- */
 
 		$this->class_cats = array ();
@@ -195,6 +195,7 @@ Set up an additional board class elements :)
 		$this->data_moderated = false;
 		$this->data_moderator = false;
 		$this->data_readable = false;
+		$this->data_sid = "87ecbe0ba0a0b3c7e60030043614e655";
 		$this->data_writable = false;
 		$this->data_writable_as_submission = false;
 	}
@@ -349,7 +350,7 @@ Set up an additional board class elements :)
 			if (strlen ($this->data_doctype)) { $this->define_extra_conditions ($direct_classes['db']->define_row_conditions_encode ($direct_settings['contentor_cats_table'].".ddbcontentor_cats_doctype",$this->data_doctype,"string")); }
 			$f_result_array = parent::get_aid ($f_attributes,$f_values);
 
-			if (($f_result_array)&&($f_result_array['ddbdatalinker_sid'] == "87ecbe0ba0a0b3c7e60030043614e655")&&($f_result_array['ddbdatalinker_type'] == 1))
+			if (($f_result_array)&&($f_result_array['ddbdatalinker_sid'] == $this->data_sid)&&($f_result_array['ddbdatalinker_type'] == 1))
 			{
 				$this->data = $f_result_array;
 

@@ -197,6 +197,7 @@ Set up an additional post class element :)
 		$this->data_published = true;
 		$this->data_readable = false;
 		$this->data_readable_group = false;
+		$this->data_sid = "87ecbe0ba0a0b3c7e60030043614e655";
 		$this->data_writable = false;
 		$this->data_writable_group = false;
 
@@ -401,7 +402,7 @@ array ("type" => "left-outer-join","table" => $direct_settings['users_table']." 
 
 			$f_result_array = parent::get_aid ($f_attributes,$f_values);
 
-			if (($f_result_array)&&($f_result_array['ddbdatalinker_sid'] == "87ecbe0ba0a0b3c7e60030043614e655")&&(($f_result_array['ddbdatalinker_type'] == 2)||($f_result_array['ddbdatalinker_type'] == 3)))
+			if (($f_result_array)&&($f_result_array['ddbdatalinker_sid'] == $this->data_sid)&&(($f_result_array['ddbdatalinker_type'] == 2)||($f_result_array['ddbdatalinker_type'] == 3)))
 			{
 				$this->data = $f_result_array;
 
@@ -1143,7 +1144,7 @@ $f_attributes = array ("ddbcontentor_docs_id_front","ddbcontentor_docs_owner_id"
 						if (($this->data_insert_mode)||(isset ($this->data_changed['ddbdatalinker_id_main']))) { $f_update_values .= $direct_classes['db']->define_set_attributes_encode ($direct_settings['data_table'].".ddbdata_id_cat",$this->data['ddbdatalinker_id_main'],"string"); }
 						if (($this->data_insert_mode)||(isset ($this->data_changed['ddbcontentor_docs_owner_id']))) { $f_update_values .= $direct_classes['db']->define_set_attributes_encode ($direct_settings['data_table'].".ddbdata_owner",$this->data['ddbcontentor_docs_owner_id'],"string"); }
 						if (($this->data_insert_mode)||(isset ($this->data_changed['ddbdata_data']))) { $f_update_values .= $direct_classes['db']->define_set_attributes_encode ($direct_settings['data_table'].".ddbdata_data",$this->data['ddbdata_data'],"string"); }
-						if ($this->data_insert_mode) { $f_update_values .= "<element1 attribute='{$direct_settings['data_table']}.ddbdata_sid' value='87ecbe0ba0a0b3c7e60030043614e655' type='string' />"; }
+						if ($this->data_insert_mode) { $f_update_values .= "<element1 attribute='{$direct_settings['data_table']}.ddbdata_sid' value='{$this->data_sid}' type='string' />"; }
 						if (($this->data_insert_mode)||(isset ($this->data_changed['ddbdata_mode_user']))) { $f_update_values .= $direct_classes['db']->define_set_attributes_encode ($direct_settings['data_table'].".ddbdata_mode_user",$this->data['ddbdata_mode_user'],"string"); }
 						if (($this->data_insert_mode)||(isset ($this->data_changed['ddbdata_mode_group']))) { $f_update_values .= $direct_classes['db']->define_set_attributes_encode ($direct_settings['data_table'].".ddbdata_mode_group",$this->data['ddbdata_mode_group'],"string"); }
 						if (($this->data_insert_mode)||(isset ($this->data_changed['ddbdata_mode_all']))) { $f_update_values .= $direct_classes['db']->define_set_attributes_encode ($direct_settings['data_table'].".ddbdata_mode_all",$this->data['ddbdata_mode_all'],"string"); }
