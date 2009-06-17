@@ -202,7 +202,7 @@ $f_return = array (
 				$f_return['category_id'] = $f_parsed_array['oid'];
 				$f_return['category_title_type'] = direct_local_get ("contentor_cat");
 				$f_return['category_title'] = $f_parsed_array['title'];
-				$f_return['category_desc'] = $f_parsed_array['data'];
+				$f_return['category_desc'] = $f_parsed_array['desc'];
 				$f_return['category_url'] = $f_parsed_array['pageurl'];
 				$f_return['category_entries'] = $f_parsed_array['objects'];
 			}
@@ -301,10 +301,21 @@ $f_return = array (
 			}
 
 			$f_return['object_desc'] = $f_parsed_array['desc'];
-			$f_return['object_last_username'] = $f_parsed_array['username'];
-			$f_return['object_last_userpageurl'] = $f_parsed_array['userpageurl'];
-			$f_return['object_last_useravatar'] = $f_parsed_array['useravatar_small'];
-			$f_return['object_content'] = $f_parsed_array['text'];
+
+			if ($f_parsed_array['ownername'])
+			{
+				$f_return['object_last_username'] = $f_parsed_array['ownername'];
+				$f_return['object_last_userpageurl'] = $f_parsed_array['ownerpageurl'];
+				$f_return['object_last_useravatar'] = $f_parsed_array['owneravatar_small'];
+			}
+			else
+			{
+				$f_return['object_last_username'] = "";
+				$f_return['object_last_userpageurl'] = "";
+				$f_return['object_last_useravatar'] = "";
+			}
+
+			$f_return['object_content'] = "";
 
 			if ($f_doc_array['ddbdatalinker_sorting_date']) { $f_return['object_last_time'] = $direct_classes['basic_functions']->datetime ("shortdate&time",$f_doc_array['ddbdatalinker_sorting_date'],$direct_settings['user']['timezone'],(direct_local_get ("datetime_dtconnect"))); }
 			else { $f_return['object_last_time'] = direct_local_get ("core_unknown"); }
@@ -318,10 +329,11 @@ $f_return = array (
 			if ((!$f_subs_check)&&($f_cat_array['ddbcontentor_cats_doctype'] != "all"))
 			{
 				$f_parsed_array = $f_cat_object->parse ("m=contentor&a=[a]&dsd=[oid][page]");
+
 				$f_return['category_id'] = $f_parsed_array['oid'];
 				$f_return['category_title_type'] = direct_local_get ("contentor_cat");
 				$f_return['category_title'] = $f_parsed_array['title'];
-				$f_return['category_desc'] = $f_parsed_array['data'];
+				$f_return['category_desc'] = $f_parsed_array['desc'];
 				$f_return['category_url'] = $f_parsed_array['pageurl'];
 				$f_return['category_entries'] = $f_parsed_array['objects'];
 			}
