@@ -163,7 +163,7 @@ case "wikilink":
 			{
 				$g_doc_object = new direct_contentor_doc ();
 
-				if ($g_doc_object) { $g_doc_array = $g_doc_object->get_aid (array ($direct_settings['datalinker_table'].".ddbdatalinker_id_main",$direct_settings['datalinkerd_table'].".ddbdatalinker_title"),(array ($g_cid,$g_result_array[1]))); }
+				if ($g_doc_object) { $g_doc_array = $g_doc_object->get_aid (array ($direct_settings['datalinker_table'].".ddbdatalinker_id_main",$direct_settings['datalinkerd_table'].".ddbdatalinker_title"),(array ($g_cid,$g_wiki_title))); }
 				else { $g_doc_array = NULL; }
 
 				if (is_array ($g_doc_array)) { $g_target_link = str_replace (array ("[a]","[oid]"),(array ("view","cdid+{$g_doc_array['ddbdatalinker_id']}++")),$g_connector_url); }
