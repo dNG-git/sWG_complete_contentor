@@ -1236,7 +1236,7 @@ $f_update_values = ("<sqlvalues>
 
 				$direct_classes['db']->define_set_attributes ($f_update_values);
 
-				$f_update_criteria = "<sqlconditions>".($direct_classes['db']->define_row_conditions_encode ($direct_settings['datalinkerd_table']."ddbdatalinkerd_id",$this->data['ddbdatalinker_id_object'],"string"))."</sqlconditions>";
+				$f_update_criteria = "<sqlconditions>".($direct_classes['db']->define_row_conditions_encode ($direct_settings['datalinkerd_table'].".ddbdatalinkerd_id",$this->data['ddbdatalinker_id_object'],"string"))."</sqlconditions>";
 				$direct_classes['db']->define_row_conditions ($f_update_criteria);
 
 				$f_return = $direct_classes['db']->query_exec ("co");
