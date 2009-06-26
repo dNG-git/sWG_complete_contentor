@@ -238,7 +238,7 @@ case "versions":
 
 	if ((!$g_source)&&($g_connector_url)) { $g_back_link = str_replace (array ("[a]","[oid]"),(array ("view","cdid+{$g_did}++")),$g_connector_url); }
 
-	$direct_cachedata['page_this'] = "m=contentor&s=index&a=versions&dsd=cdid+{$g_did}++connector+".(urlencode ($g_connector))."++page+{$direct_cachedata['output_page']}++source+".(urlencode ($g_source));
+	$direct_cachedata['page_this'] = "m=contentor&a=versions&dsd=cdid+{$g_did}++connector+".(urlencode ($g_connector))."++page+{$direct_cachedata['output_page']}++source+".(urlencode ($g_source));
 	$direct_cachedata['page_backlink'] = $g_back_link;
 	$direct_cachedata['page_homelink'] = $g_back_link;
 
@@ -304,7 +304,7 @@ case "versions":
 		$direct_cachedata['output_doc_versions'] = array ($g_doc_object->parse ($g_connector_url));
 
 		if ((!$direct_cachedata['output_page'])||($direct_cachedata['output_page'] < 1)) { $direct_cachedata['output_page'] = 1; }
-		$direct_cachedata['output_page_url'] = "m=contentor&s=index&a=versions&dsd=cdid+{$g_did}++connector+".(urlencode ($g_connector))."++source+".(urlencode ($g_source))."++";
+		$direct_cachedata['output_page_url'] = "m=contentor&a=versions&dsd=cdid+{$g_did}++connector+".(urlencode ($g_connector))."++source+".(urlencode ($g_source))."++";
 
 		if (($g_doc_array['ddbdatalinker_objects'] > 0)&&($g_cat_object->is_diversity_dms ()))
 		{
@@ -432,8 +432,8 @@ case "view":
 
 			if ($g_cat_object->is_diversity_dms ())
 			{
-				if ($g_doc_array['ddbdatalinker_objects'] > 0) { $direct_classes['output']->options_insert (1,"servicemenu","m=contentor&s=handbooks&a=versions&dsd=cdid+{$g_did}++connector+{$g_connector}++source+".$direct_cachedata['output_source'],(direct_local_get ("contentor_docv_list")),$direct_settings['serviceicon_contentor_docv_list'],"url0"); }
-				elseif ($g_doc_array['ddbdatalinker_type'] == 3) { $direct_classes['output']->options_insert (1,"servicemenu","m=contentor&s=handbooks&a=versions&dsd=cdid+{$g_doc_array['ddbdatalinker_id_parent']}++connector+{$g_connector}++source+".$direct_cachedata['output_source'],(direct_local_get ("contentor_docv_list")),$direct_settings['serviceicon_contentor_docv_list'],"url0"); }
+				if ($g_doc_array['ddbdatalinker_objects'] > 0) { $direct_classes['output']->options_insert (1,"servicemenu","m=contentor&a=versions&dsd=cdid+{$g_did}++connector+{$g_connector}++source+".$direct_cachedata['output_source'],(direct_local_get ("contentor_docv_list")),$direct_settings['serviceicon_contentor_docv_list'],"url0"); }
+				elseif ($g_doc_array['ddbdatalinker_type'] == 3) { $direct_classes['output']->options_insert (1,"servicemenu","m=contentor&a=versions&dsd=cdid+{$g_doc_array['ddbdatalinker_id_parent']}++connector+{$g_connector}++source+".$direct_cachedata['output_source'],(direct_local_get ("contentor_docv_list")),$direct_settings['serviceicon_contentor_docv_list'],"url0"); }
 			}
 
 			if ($g_cat_object->is_writable ()) { $direct_classes['output']->options_insert (1,"servicemenu","m=contentor&s=doc&a=new&dsd=ccid+{$g_cat_array['ddbdatalinker_id']}++connector+{$g_connector}++source+".$direct_cachedata['output_source'],(direct_local_get ("contentor_doc_new")),$direct_settings['serviceicon_contentor_doc_new'],"url0"); }
