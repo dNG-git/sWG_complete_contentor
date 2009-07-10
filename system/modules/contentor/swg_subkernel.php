@@ -28,7 +28,6 @@ this program; if not, write to the Free Software Foundation, Inc.,
 ----------------------------------------------------------------------------
 http://www.direct-netware.de/redirect.php?licenses;gpl
 ----------------------------------------------------------------------------
-$Id: swg_subkernel.php,v 1.1 2009/01/03 19:53:39 s4u Exp $
 #echo(sWGcontentorVersion)#
 sWG/#echo(__FILEPATH__)#
 ----------------------------------------------------------------------------

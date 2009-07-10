@@ -28,7 +28,6 @@ this program; if not, write to the Free Software Foundation, Inc.,
 ----------------------------------------------------------------------------
 http://www.direct-netware.de/redirect.php?licenses;gpl
 ----------------------------------------------------------------------------
-$Id: swg_contentor_iviewer.php,v 1.5 2009/03/03 08:57:33 s4u Exp $
 #echo(sWGcontentorVersion)#
 sWG/#echo(__FILEPATH__)#
 ----------------------------------------------------------------------------
