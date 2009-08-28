@@ -63,8 +63,7 @@ all development packets)
 Testing for required classes
 ------------------------------------------------------------------------- */
 
-$g_continue_check = true;
-if (defined ("CLASS_direct_contentor_doc")) { $g_continue_check = false; }
+$g_continue_check = ((defined ("CLASS_direct_contentor_doc")) ? false : true);
 if (!defined ("CLASS_direct_datalinker")) { $direct_classes['basic_functions']->include_file ($direct_settings['path_system']."/classes/dhandler/swg_datalinker.php"); }
 if (!defined ("CLASS_direct_datalinker")) { $g_continue_check = false; }
 
@@ -118,6 +117,10 @@ class direct_contentor_doc extends direct_datalinker
 	*      group that is allowed to read this document
 */
 	protected $data_readable_group;
+/**
+	* @var boolean $data_sticky True if this document is sticky
+*/
+	protected $data_sticky;
 /**
 	* @var boolean $data_writable True if the current user is allowed to
 	*      write to this document
@@ -197,6 +200,7 @@ Set up an additional post class element :)
 		$this->data_readable = false;
 		$this->data_readable_group = false;
 		$this->data_sid = "87ecbe0ba0a0b3c7e60030043614e655";
+		$this->data_sticky = false;
 		$this->data_writable = false;
 		$this->data_writable_group = false;
 
@@ -243,10 +247,9 @@ Set up an additional post class element :)
 		{
 			if (((is_bool ($f_state))||(is_string ($f_state)))&&($f_state)) { $f_return = true; }
 			elseif (($f_state === NULL)&&(!$this->data['ddbcontentor_docs_locked'])) { $f_return = true; }
+			$this->data_locked = $f_return;
 
-			if ($f_return) { $this->data['ddbcontentor_docs_locked'] = 1; }
-			else { $this->data['ddbcontentor_docs_locked'] = 0; }
-
+			$this->data['ddbcontentor_docs_locked'] = ($f_return ? 1 : 0);
 			$this->data_changed['ddbcontentor_docs_locked'] = true;	
 			if ($f_update) { $this->update (false,true); }
 		}
@@ -297,11 +300,10 @@ Set up an additional post class element :)
 		{
 			if (((is_bool ($f_state))||(is_string ($f_state)))&&($f_state)) { $f_return = true; }
 			elseif (($f_state === NULL)&&(!$this->data['ddbdatalinker_position'])) { $f_return = true; }
+			$this->data_sticky = $f_return;
 
-			if ($f_return) { $this->data['ddbdatalinker_position'] = 1; }
-			else { $this->data['ddbdatalinker_position'] = 0; }
-
-			$this->data_changed['ddbdatalinker_position'] = true;	
+			$this->data['ddbdatalinker_position'] = ($f_return ? 1 : 0);
+			$this->data_changed['ddbdatalinker_position'] = true;
 			if ($f_update) { parent::update (true,false); }
 		}
 
@@ -345,11 +347,8 @@ Set up an additional post class element :)
 	public function get ($f_did = "",$f_content = true,$f_load = true)
 	{
 		if (USE_debug_reporting) { direct_debug (7,"sWG/#echo(__FILEPATH__)# -contentor_doc->get ($f_did,+f_content,+f_load)- (#echo(__LINE__)#)"); }
-		$f_return = false;
 
-		if (($f_content)||($f_load)) { $f_return = $this->get_aid (NULL,$f_did,$f_content); }
-		else { $f_return = parent::get ($f_did,false); }
-
+		$f_return = ((($f_content)||($f_load)) ? $this->get_aid (NULL,$f_did,$f_content) : parent::get ($f_did,false));
 		return /*#ifdef(DEBUG):direct_debug (9,"sWG/#echo(__FILEPATH__)# -contentor_doc->get ()- (#echo(__LINE__)#)",:#*/$f_return/*#ifdef(DEBUG):,true):#*/;
 	}
 
@@ -404,9 +403,8 @@ array ("type" => "left-outer-join","table" => $direct_settings['users_table']." 
 			if (($f_result_array)&&($f_result_array['ddbdatalinker_sid'] == $this->data_sid)&&(($f_result_array['ddbdatalinker_type'] == 2)||($f_result_array['ddbdatalinker_type'] == 3)))
 			{
 				$this->data = $f_result_array;
-
-				if ($this->data['ddbcontentor_docs_locked']) { $this->data_locked = true; }
-				else { $this->data_locked = false; }
+				$this->data_locked = ($this->data['ddbcontentor_docs_locked'] ? true : false);
+				$this->data_sticky = ($this->data['ddbdatalinker_position'] ? true : false);
 
 				$f_result_array = $this->get_rights ();
 				$this->data_readable = $f_result_array[0];
@@ -475,9 +473,7 @@ array ("type" => "left-outer-join","table" => $direct_settings['users_table']." 
 					elseif ($f_page_active)
 					{
 						$f_page_active = false;
-
-						if (strlen ($f_result_element)) { $this->data_structure[$f_page] = $f_result_element; }
-						else { $this->data_structure[$f_page] = $f_page; }
+						$this->data_structure[$f_page] = ((strlen ($f_result_element)) ? $f_result_element : $f_page);
 					}
 					else { $this->data_pages[$f_page] = preg_replace (array ("#^(\[newline\]+)#si","#(\[newline\]+)$#si"),"",$f_result_element); }
 				}
@@ -721,9 +717,7 @@ array ("type" => "left-outer-join","table" => $direct_settings['users_table']." 
 	public function is_sticky ()
 	{
 		if (USE_debug_reporting) { direct_debug (5,"sWG/#echo(__FILEPATH__)# -contentor_doc->is_sticky ()- (#echo(__LINE__)#)"); }
-
-		if ($this->data['ddbdatalinker_position']) { return /*#ifdef(DEBUG):direct_debug (7,"sWG/#echo(__FILEPATH__)# -contentor_doc->is_sticky ()- (#echo(__LINE__)#)",:#*/true/*#ifdef(DEBUG):,true):#*/; }
-		else { return /*#ifdef(DEBUG):direct_debug (7,"sWG/#echo(__FILEPATH__)# -contentor_doc->is_sticky ()- (#echo(__LINE__)#)",:#*/false/*#ifdef(DEBUG):,true):#*/; }
+		return /*#ifdef(DEBUG):direct_debug (7,"sWG/#echo(__FILEPATH__)# -contentor_doc->is_sticky ()- (#echo(__LINE__)#)",:#*/$this->data_sticky/*#ifdef(DEBUG):,true):#*/;
 	}
 
 	//f// direct_contentor_doc->is_writable ()
@@ -790,14 +784,10 @@ array ("type" => "left-outer-join","table" => $direct_settings['users_table']." 
 		if (($f_return)&&($this->data_readable)&&(count ($this->data) > 1))
 		{
 			$f_return[$f_prefix."id"] = "swgdhandlercontentordoc".$this->data['ddbdatalinker_id'];
-
 			if (($f_connector_type != "asis")&&(strpos ($f_connector,"javascript:") === 0)) { $f_connector_type = "asis"; }
 
 			$f_pageurl = str_replace ("[a]","view",$f_connector);
-
-			if ($f_connector_type == "asis") { $f_pageurl = str_replace ("[oid]",$this->data['ddbdatalinker_id'],$f_pageurl); }
-			else { $f_pageurl = str_replace ("[oid]","cdid+{$this->data['ddbdatalinker_id']}++",$f_pageurl); }
-
+			$f_pageurl = (($f_connector_type == "asis") ? str_replace ("[oid]",$this->data['ddbdatalinker_id'],$f_pageurl) : str_replace ("[oid]","cdid+{$this->data['ddbdatalinker_id']}++",$f_pageurl));
 			$f_pageurl = preg_replace ("#\[(.*?)\]#","",$f_pageurl);
 			$f_return[$f_prefix."pageurl"] = direct_linker ($f_connector_type,$f_pageurl);
 
@@ -810,10 +800,7 @@ array ("type" => "left-outer-join","table" => $direct_settings['users_table']." 
 			if ($this->data['ddbdatalinker_id_main'])
 			{
 				$f_pageurl = str_replace ("[a]","list",$f_connector);
-
-				if ($f_connector_type == "asis") { $f_pageurl = str_replace ("[oid]",$this->data['ddbdatalinker_id_main'],$f_pageurl); }
-				else { $f_pageurl = str_replace ("[oid]","ccid+{$this->data['ddbdatalinker_id_main']}++",$f_pageurl); }
-
+				$f_pageurl = (($f_connector_type == "asis") ? str_replace ("[oid]",$this->data['ddbdatalinker_id_main'],$f_pageurl) : str_replace ("[oid]","ccid+{$this->data['ddbdatalinker_id_main']}++",$f_pageurl));
 				$f_pageurl = preg_replace ("#\[(.*?)\]#","",$f_pageurl);
 				$f_return[$f_prefix."pageurl_main"] = direct_linker ($f_connector_type,$f_pageurl);
 			}
@@ -911,12 +898,8 @@ $f_prefix."authorsignature" => ""
 
 			$f_return[$f_prefix."desc"] = $direct_classes['formtags']->decode ($this->data['ddbcontentor_docs_desc']);
 			$f_return[$f_prefix."locked"] = $this->data_locked;
-
-			if ($direct_cachedata['kernel_lastvisit'] < $this->data['ddbdatalinker_sorting_date']) { $f_return[$f_prefix."new"] = true; }
-			else { $f_return[$f_prefix."new"] = false; }
-
-			if ($this->data['ddbdatalinker_position'] > 0) { $f_return[$f_prefix."sticky"] = true; }
-			else { $f_return[$f_prefix."sticky"] = false; }
+			$f_return[$f_prefix."sticky"] = $this->data_sticky;
+			$f_return[$f_prefix."new"] = (($direct_cachedata['kernel_lastvisit'] < $this->data['ddbdatalinker_sorting_date']) ? true : false);
 		}
 
 		return /*#ifdef(DEBUG):direct_debug (7,"sWG/#echo(__FILEPATH__)# -contentor_doc->parse ()- (#echo(__LINE__)#)",:#*/$f_return/*#ifdef(DEBUG):,true):#*/;
@@ -1008,9 +991,8 @@ $f_attributes = array ("ddbcontentor_docs_id_front","ddbcontentor_docs_owner_id"
 
 			$this->set_extras ($f_data,$f_attributes);
 			$this->data_cid = $this->data['ddbdatalinker_id_main'];
-
-			if ($this->data['ddbcontentor_docs_locked']) { $this->data_locked = true; }
-			else { $this->data_locked = false; }
+			$this->data_locked = ($this->data['ddbcontentor_docs_locked'] ? true : false);
+			$this->data_sticky = ($this->data['ddbdatalinker_position'] ? true : false);
 
 			$f_result_array = $this->get_rights ();
 			$this->data_readable = $f_result_array[0];

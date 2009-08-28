@@ -64,7 +64,7 @@ Direct calls will be honored with an "exit ()"
 
 if (!defined ("direct_product_iversion")) { exit (); }
 
-//f// direct_datalinker_contentor (&$f_object)
+//f// direct_datalinker_contentor (&$f_object,$f_doc_pages = true)
 /**
 * Returns the object for the requested DataLinker type.
 *
@@ -82,41 +82,28 @@ if (!defined ("direct_product_iversion")) { exit (); }
 function &direct_datalinker_contentor (&$f_object,$f_doc_pages = true)
 {
 	global $direct_cachedata,$direct_classes,$direct_settings;
-	if (USE_debug_reporting) { direct_debug (5,"sWG/#echo(__FILEPATH__)# -direct_datalinker_contentor (+f_object)- (#echo(__LINE__)#)"); }
+	if (USE_debug_reporting) { direct_debug (5,"sWG/#echo(__FILEPATH__)# -direct_datalinker_contentor (+f_object,+f_doc_pages)- (#echo(__LINE__)#)"); }
 
 	$f_return = false;
 
 	if (is_object ($f_object))
 	{
-		$f_continue_check = $direct_classes['basic_functions']->settings_get ($direct_settings['path_data']."/settings/swg_contentor.php");
-		$f_object_array = $f_object->get ();
+		$f_object_array = (($direct_classes['basic_functions']->settings_get ($direct_settings['path_data']."/settings/swg_contentor.php")) ? $f_object->get () : NULL);
 
-		if (($f_object_array)&&($f_continue_check)&&(isset ($f_object_array['ddbdatalinker_type'])))
+		if ((is_array ($f_object_array))&&(isset ($f_object_array['ddbdatalinker_type'])))
 		{
 			switch ($f_object_array['ddbdatalinker_type'])
 			{
 			case 1:
 			{
-				$f_continue_check = $direct_classes['basic_functions']->include_file ($direct_settings['path_system']."/classes/dhandler/swg_contentor_cat.php");
-				if ($f_continue_check) { $f_return = new direct_contentor_cat (); }
-
-				if ($f_return)
-				{
-					if (!$f_return->get ($f_object_array['ddbdatalinker_id'])) { $f_return = false; }
-				}
-
+				if ($direct_classes['basic_functions']->include_file ($direct_settings['path_system']."/classes/dhandler/swg_contentor_cat.php")) { $f_return = new direct_contentor_cat (); }
+				if (($f_return)&&(!$f_return->get ($f_object_array['ddbdatalinker_id']))) { $f_return = false; }
 				break 1;
 			}
 			case 2:
 			{
-				$f_continue_check = $direct_classes['basic_functions']->include_file ($direct_settings['path_system']."/classes/dhandler/swg_contentor_doc.php");
-				if ($f_continue_check) { $f_return = new direct_contentor_doc (); }
-
-				if ($f_return)
-				{
-					if (!$f_return->get ($f_object_array['ddbdatalinker_id'],$f_doc_pages)) { $f_return = false; }
-				}
-
+				if ($direct_classes['basic_functions']->include_file ($direct_settings['path_system']."/classes/dhandler/swg_contentor_doc.php")) { $f_return = new direct_contentor_doc (); }
+				if (($f_return)&&(!$f_return->get ($f_object_array['ddbdatalinker_id'],$f_doc_pages))) { $f_return = false; }
 				break 1;
 			}
 			}

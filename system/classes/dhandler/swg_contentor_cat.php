@@ -63,8 +63,7 @@ all development packets)
 Testing for required classes
 ------------------------------------------------------------------------- */
 
-$g_continue_check = true;
-if (defined ("CLASS_direct_contentor_cat")) { $g_continue_check = false; }
+$g_continue_check = ((defined ("CLASS_direct_contentor_cat")) ? false : true);
 if (!defined ("CLASS_direct_datalinker")) { $direct_classes['basic_functions']->include_file ($direct_settings['path_system']."/classes/dhandler/swg_datalinker.php"); }
 if (!defined ("CLASS_direct_datalinker")) { $g_continue_check = false; }
 
@@ -231,12 +230,7 @@ Set up an additional variables :)
 	{
 		if (USE_debug_reporting) { direct_debug (5,"sWG/#echo(__FILEPATH__)# -contentor_cat->define_doctype ($f_doctype)- (#echo(__LINE__)#)"); }
 
-		if (is_string ($f_doctype))
-		{
-			if ($f_doctype != "all") { $this->data_doctype = $f_doctype; }
-			else { $this->data_doctype = ""; }
-		}
-
+		if (is_string ($f_doctype)) { $this->data_doctype = (($f_doctype != "all") ? $f_doctype : ""); }
 		return /*#ifdef(DEBUG):direct_debug (7,"sWG/#echo(__FILEPATH__)# -contentor_cat->define_doctype ()- (#echo(__LINE__)#)",:#*/$this->data_doctype/*#ifdef(DEBUG):,true):#*/;
 	}
 
@@ -262,9 +256,7 @@ Set up an additional variables :)
 			if (((is_bool ($f_state))||(is_string ($f_state)))&&($f_state)) { $f_return = true; }
 			elseif (($f_state === NULL)&&(!$this->data['ddbcontentor_cats_locked'])) { $f_return = true; }
 
-			if ($f_return) { $this->data['ddbcontentor_cats_locked'] = 1; }
-			else { $this->data['ddbcontentor_cats_locked'] = 0; }
-
+			$this->data['ddbcontentor_cats_locked'] = ($f_return ? 1 : 0);
 			$this->data_changed['ddbcontentor_cats_locked'] = true;
 			if ($f_update) { $this->update (); }
 		}
@@ -352,9 +344,7 @@ Set up an additional variables :)
 			if (($f_result_array)&&($f_result_array['ddbdatalinker_sid'] == $this->data_sid)&&($f_result_array['ddbdatalinker_type'] == 1))
 			{
 				$this->data = $f_result_array;
-
-				if ($this->data['ddbcontentor_cats_locked']) { $this->data_locked = true; }
-				else { $this->data_locked = false; }
+				$this->data_locked = ($this->data['ddbcontentor_cats_locked'] ? true : false);
 
 				$f_result_array = $this->get_rights ();
 				$this->data_readable = $f_result_array[0];
@@ -402,9 +392,7 @@ Set up an additional variables :)
 		if (USE_debug_reporting) { direct_debug (5,"sWG/#echo(__FILEPATH__)# -contentor_cat->get_docs ($f_offset,$f_perpage,$f_sorting_mode,+f_frontpage_mode)- (#echo(__LINE__)#)"); }
 
 		$f_return = array ();
-
-		if ($f_frontpage_mode) { $f_cache_signature = md5 ($this->data['ddbdatalinker_id_object']."1".$f_offset.$f_perpage.$f_sorting_mode); }
-		else { $f_cache_signature = md5 ($this->data['ddbdatalinker_id_object']."0".$f_offset.$f_perpage.$f_sorting_mode); }
+		$f_cache_signature = ($f_frontpage_mode ? md5 ($this->data['ddbdatalinker_id_object']."1".$f_offset.$f_perpage.$f_sorting_mode) : md5 ($this->data['ddbdatalinker_id_object']."0".$f_offset.$f_perpage.$f_sorting_mode));
 
 		if (isset ($this->class_docs[$f_cache_signature])) { $f_return =& $this->class_docs[$f_cache_signature]; }
 		elseif (isset ($this->data['ddbdatalinker_id_object']))
@@ -670,20 +658,14 @@ $f_select_criteria = ("<sub1 type='sublevel'>
 			if (($f_connector_type != "asis")&&(strpos ($f_connector,"javascript:") === 0)) { $f_connector_type = "asis"; }
 
 			$f_pageurl = str_replace ("[a]","list",$f_connector);
-
-			if ($f_connector_type == "asis") { $f_pageurl = str_replace ("[oid]",$this->data['ddbdatalinker_id'],$f_pageurl); }
-			else { $f_pageurl = str_replace ("[oid]","ccid+{$this->data['ddbdatalinker_id']}++",$f_pageurl); }
-
+			$f_pageurl = (($f_connector_type == "asis") ? str_replace ("[oid]",$this->data['ddbdatalinker_id'],$f_pageurl) : str_replace ("[oid]","ccid+{$this->data['ddbdatalinker_id']}++",$f_pageurl));
 			$f_pageurl = preg_replace ("#\[(.*?)\]#","",$f_pageurl);
 			$f_return[$f_prefix."pageurl"] = direct_linker ($f_connector_type,$f_pageurl);
 
 			if ($this->data['ddbdatalinker_id_parent'])
 			{
 				$f_pageurl = str_replace ("[a]","list",$f_connector);
-
-				if ($f_connector_type == "asis") { $f_pageurl = str_replace ("[oid]",$this->data['ddbdatalinker_id_parent'],$f_pageurl); }
-				else { $f_pageurl = str_replace ("[oid]","ccid+{$this->data['ddbdatalinker_id_parent']}++",$f_pageurl); }
-
+				$f_pageurl = (($f_connector_type == "asis") ? str_replace ("[oid]",$this->data['ddbdatalinker_id_parent'],$f_pageurl) : str_replace ("[oid]","ccid+{$this->data['ddbdatalinker_id_parent']}++",$f_pageurl));
 				$f_pageurl = preg_replace ("#\[(.*?)\]#","",$f_pageurl);
 				$f_return[$f_prefix."pageurl_parent"] = direct_linker ($f_connector_type,$f_pageurl);
 			}
@@ -692,10 +674,7 @@ $f_select_criteria = ("<sub1 type='sublevel'>
 			if ($this->data['ddbdatalinker_id_main'])
 			{
 				$f_pageurl = str_replace ("[a]","list",$f_connector);
-
-				if ($f_connector_type == "asis") { $f_pageurl = str_replace ("[oid]",$this->data['ddbdatalinker_id_main'],$f_pageurl); }
-				else { $f_pageurl = str_replace ("[oid]","ccid+{$this->data['ddbdatalinker_id_main']}++",$f_pageurl); }
-
+				$f_pageurl = (($f_connector_type == "asis") ? str_replace ("[oid]",$this->data['ddbdatalinker_id_main'],$f_pageurl) : str_replace ("[oid]","ccid+{$this->data['ddbdatalinker_id_main']}++",$f_pageurl));
 				$f_pageurl = preg_replace ("#\[(.*?)\]#","",$f_pageurl);
 				$f_return[$f_prefix."pageurl_main"] = direct_linker ($f_connector_type,$f_pageurl);
 			}
@@ -760,8 +739,7 @@ $f_select_criteria = ("<sub1 type='sublevel'>
 		{
 			$this->set_extras ($f_data,(array ("ddbcontentor_cats_desc","ddbcontentor_cats_owner_group","ddbcontentor_cats_vcontrol","ddbcontentor_cats_front_page","ddbcontentor_cats_front_id","ddbcontentor_cats_doctype","ddbcontentor_cats_locked","ddbcontentor_cats_public","ddbcontentor_cats_moderated","ddbcontentor_cats_submissions")));
 
-			if ($this->data['ddbcontentor_cats_locked']) { $this->data_locked = true; }
-			else { $this->data_locked = false; }
+			$this->data_locked = ($this->data['ddbcontentor_cats_locked'] ? true : false);
 
 			$f_result_array = $this->get_rights ();
 			$this->data_readable = $f_result_array[0];

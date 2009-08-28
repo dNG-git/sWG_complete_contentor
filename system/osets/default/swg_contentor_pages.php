@@ -76,9 +76,7 @@ function direct_output_oset_contentor_pages_list ()
 
 	if (isset ($direct_cachedata['output_cat']))
 	{
-		if (strlen ($direct_cachedata['output_cat']['title_alt'])) { $f_cat_title = $f_return = "<p class='pagecontenttitle'>{$direct_cachedata['output_cat']['title_alt']}</p>"; }
-		else { $f_return = "<p class='pagecontenttitle'>{$direct_cachedata['output_cat']['title']}</p>"; }
-
+		$f_return = ((strlen ($direct_cachedata['output_cat']['title_alt'])) ? "<p class='pagecontenttitle'>{$direct_cachedata['output_cat']['title_alt']}</p>" : "<p class='pagecontenttitle'>{$direct_cachedata['output_cat']['title']}</p>");
 		if (!empty ($direct_cachedata['output_cats'])) { $f_return .= direct_contentor_oset_cats_parse ($direct_cachedata['output_cats'],"simple"); }
 	}
 	else { $f_return = ""; }
@@ -115,9 +113,7 @@ function direct_output_oset_contentor_pages_view ()
 	if (empty ($direct_cachedata['output_doc'])) { $f_return = ""; }
 	else
 	{
-		if (strlen ($direct_cachedata['output_doc']['title_alt'])) { $f_return = "<p class='pagecontenttitle'>{$direct_cachedata['output_doc']['title_alt']}</p>\n"; }
-		else { $f_return = "<p class='pagecontenttitle'>{$direct_cachedata['output_doc']['title']}</p>\n"; }
-
+		$f_return = ((strlen ($direct_cachedata['output_doc']['title_alt'])) ? "<p class='pagecontenttitle'>{$direct_cachedata['output_doc']['title_alt']}</p>\n" : "<p class='pagecontenttitle'>{$direct_cachedata['output_doc']['title']}</p>\n");
 		$f_return .= direct_contentor_oset_doc_parse ("textonly");
 	}
 
@@ -140,9 +136,7 @@ function direct_output_oset_contentor_pages_versions ()
 
 	$direct_classes['basic_functions']->require_file ($direct_settings['path_system']."/osets/$direct_settings[theme_oset]/swgi_contentor.php");
 
-	if ($direct_cachedata['output_pages'] > 1) { $f_return = "\n<p class='pageborder2' style='text-align:center'><span class='pageextracontent' style='font-size:10px'>".(direct_output_pages_generator ($direct_cachedata['output_page_url'],$direct_cachedata['output_pages'],$direct_cachedata['output_page']))."</span></p>\n"; }
-	else { $f_return = ""; }
-
+	$f_return = (($direct_cachedata['output_pages'] > 1) ? "<p class='pageborder2' style='text-align:center'><span class='pageextracontent' style='font-size:10px'>".(direct_output_pages_generator ($direct_cachedata['output_page_url'],$direct_cachedata['output_pages'],$direct_cachedata['output_page']))."</span></p>\n" : "");
 	$f_return .= direct_contentor_oset_doc_versions_parse ($direct_cachedata['output_doc_versions']);
 	if ($direct_cachedata['output_pages'] > 1) { $f_return .= "\n<p class='pageborder2' style='text-align:center'><span class='pageextracontent' style='font-size:10px'>".(direct_output_pages_generator ($direct_cachedata['output_page_url'],$direct_cachedata['output_pages'],$direct_cachedata['output_page']))."</span></p>"; }
 

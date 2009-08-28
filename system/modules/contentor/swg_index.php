@@ -115,11 +115,9 @@ case "list":
 
 	if ((!$g_cid)&&($g_type)&&(isset ($direct_settings["contentor_{$g_type}_front_cid"]))&&($direct_settings["contentor_{$g_type}_front_cid"])) { $g_cid = $direct_settings["contentor_{$g_type}_front_cid"]; }
 	$g_cat_object = new direct_contentor_cat ();
-
-	if ($g_cat_object) { $g_cat_array = $g_cat_object->get ($g_cid); }
-	else { $g_cat_array = NULL; }
-
 	$g_docs_array = NULL;
+
+	$g_cat_array = ($g_cat_object ? $g_cat_object->get ($g_cid) : NULL);
 
 	if (is_array ($g_cat_array))
 	{
@@ -213,29 +211,15 @@ case "versions":
 {
 	if (USE_debug_reporting) { direct_debug (1,"sWG/#echo(__FILEPATH__)# _a=versions_ (#echo(__LINE__)#)"); }
 
-	$g_did = (isset ($direct_settings['dsd']['cdid']) ? ($direct_classes['basic_functions']->inputfilter_basic ($direct_settings['dsd']['cdid'])) : $g_did_d);
+	$g_did = (isset ($direct_settings['dsd']['cdid']) ? ($direct_classes['basic_functions']->inputfilter_basic ($direct_settings['dsd']['cdid'])) : "");
 	$g_connector = (isset ($direct_settings['dsd']['connector']) ? ($direct_classes['basic_functions']->inputfilter_basic ($direct_settings['dsd']['connector'])) : "");
 	$direct_cachedata['output_page'] = (isset ($direct_settings['dsd']['page']) ? ($direct_classes['basic_functions']->inputfilter_number ($direct_settings['dsd']['page'])) : 1);
 	$g_source = (isset ($direct_settings['dsd']['source']) ? ($direct_classes['basic_functions']->inputfilter_basic ($direct_settings['dsd']['source'])) : "");
 
-	$g_back_link = "";
+	$g_connector_url = ($g_connector ? base64_decode ($g_connector) : "m=contentor&a=[a]&dsd=[oid]");
+	$g_source_url = ($g_source ? base64_decode ($g_source) : "m=contentor&a=view&dsd=[oid]");
 
-	if ($g_source)
-	{
-		$g_source_url = base64_decode ($g_source);
-		if ($g_source_url) { $g_back_link = str_replace ("[oid]","cdid+{$g_did}++",$g_source_url); }
-	}
-
-	if ($g_connector) { $g_connector_url = base64_decode ($g_connector); }
-	else { $g_connector_url = NULL; }
-
-	if (!$g_connector_url)
-	{
-		$g_connector_url = "m=contentor&a=[a]&dsd=[oid]";
-		$g_connector = urlencode (base64_encode ($g_connector_url));
-	}
-
-	if ((!$g_source)&&($g_connector_url)) { $g_back_link = str_replace (array ("[a]","[oid]"),(array ("view","cdid+{$g_did}++")),$g_connector_url); }
+	$g_back_link = (((!$g_source)&&($g_connector_url)) ? preg_replace (array ("#\[a\]#","#\[oid\]#","#\[(.*?)\]#"),(array ("view","cdid+{$g_did}++","")),$g_connector_url) : str_replace ("[oid]","cdid+{$g_did}++",$g_source_url));
 
 	$direct_cachedata['page_this'] = "m=contentor&a=versions&dsd=cdid+{$g_did}++connector+".(urlencode ($g_connector))."++page+{$direct_cachedata['output_page']}++source+".(urlencode ($g_source));
 	$direct_cachedata['page_backlink'] = $g_back_link;
@@ -248,13 +232,11 @@ case "versions":
 	$direct_classes['basic_functions']->require_file ($direct_settings['path_system']."/classes/dhandler/swg_contentor_doc.php");
 	direct_local_integration ("contentor");
 
+	$g_cat_array = NULL;
 	$g_datasub_check = false;
 	$g_doc_object = new direct_contentor_doc ();
 
-	if ($g_doc_object) { $g_doc_array = $g_doc_object->get ($g_did); }
-	else { $g_doc_array = NULL; }
-
-	$g_cat_array = NULL;
+	$g_doc_array = ($g_doc_object ? $g_doc_object->get ($g_did) : NULL);
 
 	if ($g_doc_array)
 	{
@@ -281,12 +263,14 @@ case "versions":
 		$direct_classes['output']->servicemenu ("contentor_".$g_type);
 		$direct_classes['output']->options_insert (1,"servicemenu",$direct_cachedata['page_backlink'],(direct_local_get ("core_back")),$direct_settings['serviceicon_default_back'],"url0");
 
-		if ((!$g_datasub_check)&&($g_type == "wiki"))
+		if ($g_type == "wiki")
 		{
 			direct_local_integration ("contentor_wiki");
 			$direct_classes['basic_functions']->require_file ($direct_settings['path_system']."/classes/swg_formtags_wiki.php");
 			direct_class_init ("formtags");
-			$direct_classes['formtags']->define_connector ("m=contentor&s=wiki&a=[a]&dsd=ccid+{$g_cat_array['ddbdatalinker_id']}++[oid]source+".(urlencode (base64_encode ($direct_cachedata['page_this']))));
+
+			if ($g_datasub_check) { $direct_classes['formtags']->define_connector ("m=contentor&s=wiki&a=[a]&dsd=cdid+{$g_did}++[oid]source+".(urlencode (base64_encode ($direct_cachedata['page_this'])))); }
+			else { $direct_classes['formtags']->define_connector ("m=contentor&s=wiki&a=[a]&dsd=ccid+{$g_cat_array['ddbdatalinker_id']}++[oid]source+".(urlencode (base64_encode ($direct_cachedata['page_this'])))); }
 		}
 		else
 		{
@@ -355,14 +339,12 @@ case "view":
 	$direct_classes['basic_functions']->require_file ($direct_settings['path_system']."/classes/dhandler/swg_contentor_doc.php");
 	direct_local_integration ("contentor");
 
+	$g_cat_array = NULL;
 	$g_datasub_check = false;
 	if ((!$g_did)&&($g_type)&&(isset ($direct_settings["contentor_{$g_type}_front_did"]))&&($direct_settings["contentor_{$g_type}_front_did"])) { $g_did = $direct_settings["contentor_{$g_type}_front_did"]; }
 	$g_doc_object = new direct_contentor_doc ();
 
-	if ($g_doc_object) { $g_doc_array = $g_doc_object->get ($g_did); }
-	else { $g_doc_array = NULL; }
-
-	$g_cat_array = NULL;
+	$g_doc_array = ($g_doc_object ? $g_doc_object->get ($g_did) : NULL);
 
 	if ($g_doc_array)
 	{
@@ -371,7 +353,7 @@ case "view":
 		if ($g_doc_array['ddbdatalinker_id_main'])
 		{
 			$g_cat_object = new direct_contentor_cat ();
-			$g_cat_array = $g_cat_object->get ($g_doc_array['ddbdatalinker_id_main']);
+			if ($g_cat_object) { $g_cat_array = $g_cat_object->get ($g_doc_array['ddbdatalinker_id_main']); }
 		}
 		else { $g_datasub_check = true; }
 	}
@@ -388,12 +370,14 @@ case "view":
 		direct_class_init ("output");
 		$direct_classes['output']->servicemenu ("contentor_".$g_type);
 
-		if ((!$g_datasub_check)&&($g_type == "wiki"))
+		if ($g_type == "wiki")
 		{
 			direct_local_integration ("contentor_wiki");
 			$direct_classes['basic_functions']->require_file ($direct_settings['path_system']."/classes/swg_formtags_wiki.php");
 			direct_class_init ("formtags");
-			$direct_classes['formtags']->define_connector ("m=contentor&s=wiki&a=[a]&dsd=ccid+{$g_cat_array['ddbdatalinker_id']}++[oid]source+".(urlencode (base64_encode ($direct_cachedata['page_this']))));
+
+			if ($g_datasub_check) { $direct_classes['formtags']->define_connector ("m=contentor&s=wiki&a=[a]&dsd=cdid+{$g_did}++[oid]source+".(urlencode (base64_encode ($direct_cachedata['page_this'])))); }
+			else { $direct_classes['formtags']->define_connector ("m=contentor&s=wiki&a=[a]&dsd=ccid+{$g_cat_array['ddbdatalinker_id']}++[oid]source+".(urlencode (base64_encode ($direct_cachedata['page_this'])))); }
 		}
 		else
 		{
@@ -401,10 +385,8 @@ case "view":
 			$direct_classes['basic_functions']->require_file ($direct_settings['path_system']."/classes/swg_formtags.php");
 		}
 
-		if ($g_datasub_check) { $g_connector = ""; }
-		else { $g_connector = urlencode (base64_encode ("m=contentor&a=[a]&dsd=[oid]")); }
-
 		$direct_cachedata['output_source'] = urlencode (base64_encode ($direct_cachedata['page_this']));
+		$g_connector = ($g_datasub_check ? "" : urlencode (base64_encode ("m=contentor&a=[a]&dsd=[oid]")));
 		$g_rights_check = false;
 
 		if ($g_doc_object->is_writable ()) { $g_rights_check = true; }

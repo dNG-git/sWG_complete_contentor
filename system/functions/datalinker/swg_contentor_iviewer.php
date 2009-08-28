@@ -84,8 +84,8 @@ function direct_datalinker_contentor_iviewer ($f_viewer_data,&$f_object)
 
 	if (isset ($f_viewer_data['handler']))
 	{
-		$f_continue_check = $direct_classes['basic_functions']->include_file ($direct_settings['path_system']."/functions/datalinker/swg_contentor.php");
-		if ($f_continue_check) { $f_object_iview =& direct_datalinker_contentor ($f_object,false); }
+		if ($direct_classes['basic_functions']->include_file ($direct_settings['path_system']."/functions/datalinker/swg_contentor.php")) { $f_object_iview =& direct_datalinker_contentor ($f_object,false); }
+		else { $f_object_iview = NULL; }
 
 		if ($f_object_iview)
 		{
@@ -156,6 +156,7 @@ $f_return = array (
 	if (isset ($f_viewer_data['handler']))
 	{
 		$f_object_array = $f_object->get ();
+		$f_parent_array = NULL;
 		$f_parent_check = true;
 
 		if (is_array ($f_object_array))
@@ -176,8 +177,7 @@ $f_return = array (
 		if (!is_array ($f_object_array)) { $f_return['object_desc'] = direct_local_get ("errors_contentor_cid_invalid"); }
 		elseif ($f_object->is_readable ())
 		{
-			if ($f_object_array['ddbcontentor_cats_doctype'] == "all") { $f_parsed_array = $f_object->parse ("m=datalinker&dsd=deid+[oid]"); }
-			else { $f_parsed_array = $f_object->parse ("m=contentor&a=[a]&dsd=[oid][page]"); }
+			$f_parsed_array = (($f_object_array['ddbcontentor_cats_doctype'] == "all") ? $f_object->parse ("m=datalinker&dsd=deid+[oid]") : $f_object->parse ("m=contentor&a=[a]&dsd=[oid][page]"));
 
 			$f_return['object_id'] = $f_parsed_array['oid'];
 			$f_return['object_title'] = $f_parsed_array['title'];
@@ -189,10 +189,7 @@ $f_return = array (
 			}
 
 			$f_return['object_desc'] = $f_parsed_array['desc'];
-
-			if ($f_object_array['ddbcontentor_cats_doctype'] == "all") { $f_return['object_url'] = direct_linker ("url0","m=datalinker&dsd=deid+".$f_object_array['ddbdatalinker_id']); }
-			else { $f_return['object_url'] = $f_parsed_array['pageurl']; }
-
+			$f_return['object_url'] = (($f_object_array['ddbcontentor_cats_doctype'] == "all") ? direct_linker ("url0","m=datalinker&dsd=deid+".$f_object_array['ddbdatalinker_id']) : $f_parsed_array['pageurl']);
 			$f_return['object_available'] = true;
 
 			if (($f_parent_check)&&(is_array ($f_parent_array))&&($f_parent_array['ddbcontentor_cats_doctype'] != "all"))
@@ -264,14 +261,12 @@ $f_return = array (
 	if (isset ($f_viewer_data['handler']))
 	{
 		$f_continue_check = $direct_classes['basic_functions']->include_file ($direct_settings['path_system']."/classes/dhandler/swg_contentor_cat.php");
-		if ($f_continue_check) { $f_continue_check = $direct_classes['basic_functions']->include_file ($direct_settings['path_system']."/classes/swg_formtags.php"); }
-		if ($f_continue_check) { $f_continue_check = direct_class_init ("formtags"); }
+		if ((!defined ("CLASS_direct_formtags"))&&($f_continue_check)) { $f_continue_check = $direct_classes['basic_functions']->include_file ($direct_settings['path_system']."/classes/swg_formtags.php"); }
+		if ((!isset ($direct_classes['formtags']))&&($f_continue_check)) { $f_continue_check = direct_class_init ("formtags"); }
 
 		$f_cat_array = NULL;
-		$f_doc_array = NULL;
+		$f_doc_array = ($f_continue_check ? $f_object->get ("",false) : NULL);
 		$f_subs_check = false;
-
-		if ($f_continue_check) { $f_doc_array = $f_object->get ("",false); }
 
 		if (is_array ($f_doc_array))
 		{
@@ -287,8 +282,7 @@ $f_return = array (
 		if ((($f_subs_check)||(!is_array ($f_cat_array)))&&(!is_array ($f_doc_array))) { $f_return['object_desc'] = direct_local_get ("errors_contentor_did_invalid"); }
 		elseif (($f_object->is_readable ())&&(($f_subs_check)||($f_cat_object->is_readable ())))
 		{
-			if ($f_doc_array['ddbcontentor_docs_doctype'] == "all") { $f_parsed_array = $f_object->parse ("m=datalinker&dsd=deid+[oid]"); }
-			else { $f_parsed_array = $f_object->parse ("m=contentor&a=[a]&dsd=[oid][page]"); }
+			$f_parsed_array = (($f_doc_array['ddbcontentor_docs_doctype'] == "all") ? $f_object->parse ("m=datalinker&dsd=deid+[oid]") : $f_object->parse ("m=contentor&a=[a]&dsd=[oid][page]"));
 
 			$f_return['object_id'] = $f_parsed_array['oid'];
 			$f_return['object_title'] = $f_parsed_array['title'];
@@ -315,13 +309,8 @@ $f_return = array (
 			}
 
 			$f_return['object_content'] = "";
-
-			if ($f_doc_array['ddbdatalinker_sorting_date']) { $f_return['object_last_time'] = $direct_classes['basic_functions']->datetime ("shortdate&time",$f_doc_array['ddbdatalinker_sorting_date'],$direct_settings['user']['timezone'],(direct_local_get ("datetime_dtconnect"))); }
-			else { $f_return['object_last_time'] = direct_local_get ("core_unknown"); }
-
-			if (isset ($f_parsed_array['pageurl_counted'])) { $f_return['object_url'] = $f_parsed_array['pageurl_counted']; }
-			else { $f_return['object_url'] = $f_parsed_array['pageurl']; }
-
+			$f_return['object_last_time'] = ($f_doc_array['ddbdatalinker_sorting_date'] ? $direct_classes['basic_functions']->datetime ("shortdate&time",$f_doc_array['ddbdatalinker_sorting_date'],$direct_settings['user']['timezone'],(direct_local_get ("datetime_dtconnect"))) : direct_local_get ("core_unknown"));
+			$f_return['object_url'] = ((isset ($f_parsed_array['pageurl_counted'])) ? $f_parsed_array['pageurl_counted'] : $f_parsed_array['pageurl']);
 			$f_return['object_available'] = true;
 			$f_return['object_new'] = $f_parsed_array['new'];
 

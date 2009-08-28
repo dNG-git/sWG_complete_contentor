@@ -77,38 +77,27 @@ case "wikilink":
 {
 	if (USE_debug_reporting) { direct_debug (1,"sWG/#echo(__FILEPATH__)# _a=wikilink_ (#echo(__LINE__)#)"); }
 
-	$g_cid = (isset ($direct_settings['dsd']['ccid']) ? ($direct_classes['basic_functions']->inputfilter_basic ($direct_settings['dsd']['ccid'])) : $g_cid_d);
+	$g_cid = (isset ($direct_settings['dsd']['ccid']) ? ($direct_classes['basic_functions']->inputfilter_basic ($direct_settings['dsd']['ccid'])) : "");
+	$g_did = (isset ($direct_settings['dsd']['cdid']) ? ($direct_classes['basic_functions']->inputfilter_basic ($direct_settings['dsd']['cdid'])) : "");
 	$g_wiki_id = (isset ($direct_settings['dsd']['cwikiid']) ? ($direct_classes['basic_functions']->inputfilter_basic ($direct_settings['dsd']['cwikiid'])) : "");
 	$g_connector = (isset ($direct_settings['dsd']['connector']) ? ($direct_classes['basic_functions']->inputfilter_basic ($direct_settings['dsd']['connector'])) : "");
 	$g_source = (isset ($direct_settings['dsd']['source']) ? ($direct_classes['basic_functions']->inputfilter_basic ($direct_settings['dsd']['source'])) : "");
 	$g_target = (isset ($direct_settings['dsd']['target']) ? ($direct_classes['basic_functions']->inputfilter_basic ($direct_settings['dsd']['target'])) : "");
 
-	$g_back_link = "";
+	$g_connector_url = ($g_connector ? base64_decode ($g_connector) : "m=contentor&a=[a]&dsd=[oid]");
 
-	if ($g_source)
-	{
-		$g_source_url = base64_decode ($g_source);
-		if ($g_source_url) { $g_back_link = str_replace ("[oid]","ccid+{$g_cid}++",$g_source_url); }
-	}
-	else { $g_source_url = "m=contentor&a=list&dsd=[oid]"; }
-
-	if ($g_connector) { $g_connector_url = base64_decode ($g_connector); }
-	else { $g_connector_url = NULL; }
-
-	if (!$g_connector_url)
-	{
-		$g_connector_url = "m=contentor&a=[a]&dsd=[oid]";
-		$g_connector = urlencode (base64_encode ($g_connector_url));
-	}
-
-	if ((!$g_source)&&($g_connector_url)) { $g_back_link = str_replace (array ("[a]","[oid]"),(array ("list","ccid+{$g_cid}++")),$g_connector_url); }
+	if ($g_cid) { $g_source_url = ($g_source ? base64_decode ($g_source) : "m=contentor&a=list&dsd=[oid]"); }
+	else { $g_source_url = ($g_source ? base64_decode ($g_source) : "m=contentor&a=view&dsd=[oid]"); }
 
 	if ($g_target) { $g_target_url = base64_decode ($g_target); }
 	else
 	{
 		$g_target = $g_source;
-		$g_target_url = $g_source_url;
+		$g_target_url = ($g_source ? $g_source_url : "");
 	}
+
+	if ($g_cid) { $g_back_link = (((!$g_source)&&($g_connector_url)) ? preg_replace (array ("#\[a\]#","#\[oid\]#","#\[(.*?)\]#"),(array ("list","ccid+{$g_cid}++","")),$g_connector_url) : str_replace ("[oid]","ccid+{$g_cid}++",$g_source_url)); }
+	else { $g_back_link = (((!$g_source)&&($g_connector_url)) ? preg_replace (array ("#\[a\]#","#\[oid\]#","#\[(.*?)\]#"),(array ("view","cdid+{$g_did}++","")),$g_connector_url) : str_replace ("[oid]","cdid+{$g_did}++",$g_source_url)); }
 
 	$direct_cachedata['page_this'] = "";
 	$direct_cachedata['page_backlink'] = $g_back_link;
@@ -122,17 +111,32 @@ case "wikilink":
 	direct_local_integration ("contentor");
 	direct_local_integration ("contentor_wiki");
 
-	if ((!$g_cid)&&(isset ($direct_settings["contentor_wiki_front_cid"]))&&($direct_settings["contentor_wiki_front_cid"])) { $g_cid = $direct_settings["contentor_wiki_front_cid"]; }
-	$g_cat_object = new direct_contentor_cat ();
+	$g_cat_array = NULL;
+	$g_doc_array = NULL;
 
-	if ($g_cat_object)
+	if ((!$g_cid)&&($g_did))
 	{
-		$g_cat_object->define_doctype ("wiki");
-		$g_cat_array = $g_cat_object->get ($g_cid);
-	}
-	else { $g_cat_array = NULL; }
+		$g_doc_object = new direct_contentor_cat ();
 
-	if ((!$g_connector_url)||(!is_array ($g_cat_array))||(!isset ($direct_settings["contentor_".$g_cat_array['ddbcontentor_cats_doctype']]))) { $direct_classes['error_functions']->error_page ("standard","contentor_wiki_wikiid_invalid","sWG/#echo(__FILEPATH__)# _a=wikilink_ (#echo(__LINE__)#)"); }
+		if ($g_doc_object) { $g_doc_array = $g_doc_object->get ($g_did); }
+		if ((is_array ($g_doc_array))&&($g_doc_array['ddbdatalinker_id'] != $g_doc_array['ddbdatalinker_id_object'])) { $g_doc_array = $g_doc_object->get ($g_doc_array['ddbdatalinker_id_object']); }
+		if ((is_array ($g_doc_array))&&($g_doc_array['ddbdatalinker_id_main'])) { $g_cid = $g_doc_array['ddbdatalinker_id_main']; }
+	}
+
+	if ((!$g_cid)&&(isset ($direct_settings["contentor_wiki_front_cid"]))&&($direct_settings["contentor_wiki_front_cid"])) { $g_cid = $direct_settings["contentor_wiki_front_cid"]; }
+
+	if ($g_cid)
+	{
+		$g_cat_object = new direct_contentor_cat ();
+
+		if ($g_cat_object)
+		{
+			$g_cat_object->define_doctype ("wiki");
+			$g_cat_array = $g_cat_object->get ($g_cid);
+		}
+	}
+
+	if ((!$g_connector_url)||((!is_array ($g_cat_array))&&(!is_array ($g_doc_array)))||(!isset ($direct_settings["contentor_".$g_cat_array['ddbcontentor_cats_doctype']]))) { $direct_classes['error_functions']->error_page ("standard","contentor_wiki_wikiid_invalid","sWG/#echo(__FILEPATH__)# _a=wikilink_ (#echo(__LINE__)#)"); }
 	elseif ($g_cat_object->is_readable ())
 	{
 		direct_output_related_manager ("contentor_wiki_wikilink_".$g_cid,"pre_module_service_action");
@@ -141,8 +145,7 @@ case "wikilink":
 		$direct_classes['output']->servicemenu ("contentor_wiki");
 		$direct_classes['output']->options_insert (1,"servicemenu",$direct_cachedata['page_backlink'],(direct_local_get ("core_back")),$direct_settings['serviceicon_default_back'],"url0");
 
-		if ($g_wiki_id) { $g_wiki_title = base64_decode ($g_wiki_id); }
-		else { $g_wiki_title = ""; }
+		$g_wiki_title = ($g_wiki_id ? base64_decode ($g_wiki_id) : "");
 
 		if (strlen ($g_wiki_title))
 		{
@@ -152,19 +155,13 @@ case "wikilink":
 			elseif (preg_match ("#^category\:(.+?)$#i",$g_wiki_title,$g_result_array))
 			{
 				$g_cat_object = new direct_contentor_cat ();
-
-				if ($g_cat_object) { $g_cat_array = $g_cat_object->get_aid ($direct_settings['datalinkerd_table'].".ddbdatalinker_title",$g_result_array[1]); }
-				else { $g_cat_array = NULL; }
-
+				$g_cat_array = ($g_cat_object ? $g_cat_object->get_aid ($direct_settings['datalinkerd_table'].".ddbdatalinker_title",$g_result_array[1]) : NULL);
 				if (is_array ($g_cat_array)) { $g_target_link = str_replace (array ("[a]","[oid]"),(array ("list","ccid+{$g_cat_array['ddbdatalinker_id']}++")),$g_connector_url); }
 			}
 			else
 			{
 				$g_doc_object = new direct_contentor_doc ();
-
-				if ($g_doc_object) { $g_doc_array = $g_doc_object->get_aid (array ($direct_settings['datalinker_table'].".ddbdatalinker_id_main",$direct_settings['datalinkerd_table'].".ddbdatalinker_title"),(array ($g_cid,$g_wiki_title))); }
-				else { $g_doc_array = NULL; }
-
+				$g_doc_array = ($g_doc_object ? $g_doc_object->get_aid (array ($direct_settings['datalinker_table'].".ddbdatalinker_id_main",$direct_settings['datalinkerd_table'].".ddbdatalinker_title"),(array ($g_cid,$g_wiki_title))) : NULL);
 				if (is_array ($g_doc_array)) { $g_target_link = str_replace (array ("[a]","[oid]"),(array ("view","cdid+{$g_doc_array['ddbdatalinker_id']}++")),$g_connector_url); }
 			}
 		}

@@ -62,8 +62,7 @@ all development packets)
 Testing for required classes
 ------------------------------------------------------------------------- */
 
-$g_continue_check = true;
-if (defined ("CLASS_direct_formtags_wiki")) { $g_continue_check = false; }
+$g_continue_check = ((defined ("CLASS_direct_formtags_wiki")) ? false : true);
 if (!defined ("CLASS_direct_formtags")) { $direct_classes['basic_functions']->include_file ($direct_settings['path_system']."/classes/swg_formtags.php"); }
 if (!defined ("CLASS_direct_formtags")) { $g_continue_check = false; }
 
@@ -132,9 +131,7 @@ Connector initalisation :)
 ------------------------------------------------------------------------- */
 
 		$this->connector = $f_connector;
-
-		if (($f_connector_type != "asis")&&(strpos ($f_connector,"javascript:") === 0)) { $this->connector_type = "asis"; }
-		else { $this->connector_type = $f_connector_type; }
+		$this->connector_type = ((($f_connector_type != "asis")&&(strpos ($f_connector,"javascript:") === 0)) ? "asis" : $f_connector_type);
 	}
 
 	//f// direct_formtags_wiki->cleanup ($f_data,$f_break_urls = false)
@@ -163,10 +160,7 @@ Connector initalisation :)
 				foreach ($f_results_array as $f_result_array)
 				{
 					$f_pageurl = str_replace ("[a]","wikilink",$this->connector);
-
-					if ($this->connector_type == "asis") { $f_pageurl = str_replace ("[oid]",(urlencode (base64_encode ($f_result_array[1]))),$f_pageurl); }
-					else { $f_pageurl = str_replace ("[oid]","cwikiid+".(urlencode (base64_encode ($f_result_array[1])))."++",$f_pageurl); }
-
+					$f_pageurl = (($this->connector_type == "asis") ? str_replace ("[oid]",(urlencode (base64_encode ($f_result_array[1]))),$f_pageurl) : str_replace ("[oid]","cwikiid+".(urlencode (base64_encode ($f_result_array[1])))."++",$f_pageurl));
 					$f_pageurl = preg_replace ("#\[(.*?)\]#","",$f_pageurl);
 					$f_return = str_replace ($f_result_array[0],$f_result_array[2]." (".(direct_linker ($this->connector_type,$f_pageurl)).")",$f_return);
 				}
@@ -177,10 +171,7 @@ Connector initalisation :)
 				foreach ($f_results_array as $f_result_array)
 				{
 					$f_pageurl = str_replace ("[a]","wikilink",$this->connector);
-
-					if ($this->connector_type == "asis") { $f_pageurl = str_replace ("[oid]",(urlencode (base64_encode ($f_result_array[1]))),$f_pageurl); }
-					else { $f_pageurl = str_replace ("[oid]","cwikiid+".(urlencode (base64_encode ($f_result_array[1])))."++",$f_pageurl); }
-
+					$f_pageurl = (($this->connector_type == "asis") ? str_replace ("[oid]",(urlencode (base64_encode ($f_result_array[1]))),$f_pageurl) : str_replace ("[oid]","cwikiid+".(urlencode (base64_encode ($f_result_array[1])))."++",$f_pageurl));
 					$f_pageurl = preg_replace ("#\[(.*?)\]#","",$f_pageurl);
 					$f_return = str_replace ($f_result_array[0],$f_result_array[1]." (".(direct_linker ($this->connector_type,$f_pageurl)).")",$f_return);
 				}
@@ -214,10 +205,7 @@ Connector initalisation :)
 				foreach ($f_results_array as $f_result_array)
 				{
 					$f_pageurl = str_replace ("[a]","wikilink",$this->connector);
-
-					if ($this->connector_type == "asis") { $f_pageurl = str_replace ("[oid]",(urlencode (base64_encode ($f_result_array[1]))),$f_pageurl); }
-					else { $f_pageurl = str_replace ("[oid]","cwikiid+".(urlencode (base64_encode ($f_result_array[1])))."++",$f_pageurl); }
-
+					$f_pageurl = (($this->connector_type == "asis") ? str_replace ("[oid]",(urlencode (base64_encode ($f_result_array[1]))),$f_pageurl) : str_replace ("[oid]","cwikiid+".(urlencode (base64_encode ($f_result_array[1])))."++",$f_pageurl));
 					$f_pageurl = preg_replace ("#\[(.*?)\]#","",$f_pageurl);
 					$f_return = str_replace ($f_result_array[0],"<a href=\"".(direct_linker ($this->connector_type,$f_pageurl))."\">{$f_result_array[2]}</a>",$f_return);
 				}
@@ -228,10 +216,7 @@ Connector initalisation :)
 				foreach ($f_results_array as $f_result_array)
 				{
 					$f_pageurl = str_replace ("[a]","wikilink",$this->connector);
-
-					if ($this->connector_type == "asis") { $f_pageurl = str_replace ("[oid]",(urlencode (base64_encode ($f_result_array[1]))),$f_pageurl); }
-					else { $f_pageurl = str_replace ("[oid]","cwikiid+".(urlencode (base64_encode ($f_result_array[1])))."++",$f_pageurl); }
-
+					$f_pageurl = (($this->connector_type == "asis") ? str_replace ("[oid]",(urlencode (base64_encode ($f_result_array[1]))),$f_pageurl) : str_replace ("[oid]","cwikiid+".(urlencode (base64_encode ($f_result_array[1])))."++",$f_pageurl));
 					$f_pageurl = preg_replace ("#\[(.*?)\]#","",$f_pageurl);
 					$f_return = str_replace ($f_result_array[0],"<a href=\"".(direct_linker ($this->connector_type,$f_pageurl))."\">{$f_result_array[1]}</a>",$f_return);
 				}
@@ -259,9 +244,7 @@ Connector initalisation :)
 		if (USE_debug_reporting) { direct_debug (5,"sWG/#echo(__FILEPATH__)# -formtags_class->define_connector ($f_connector)- (#echo(__LINE__)#)"); }
 
 		$this->connector = $f_connector;
-
-		if (($f_connector_type != "asis")&&(strpos ($f_connector,"javascript:") === 0)) { $this->connector_type = "asis"; }
-		else { $this->connector_type = $f_connector_type; }
+		$this->connector_type = ((($f_connector_type != "asis")&&(strpos ($f_connector,"javascript:") === 0)) ? "asis" : $f_connector_type);
 
 		return /*#ifdef(DEBUG):direct_debug (7,"sWG/#echo(__FILEPATH__)# -formtags_class->define_connector ()- (#echo(__LINE__)#)",:#*/$this->connector/*#ifdef(DEBUG):,true):#*/;
 	}

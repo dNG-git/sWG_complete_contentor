@@ -84,11 +84,8 @@ function direct_output_oset_contentor_news_list ()
 
 	if (isset ($direct_cachedata['output_cat']))
 	{
-		if (strlen ($direct_cachedata['output_cat']['title_alt'])) { $direct_settings['theme_output_page_title'] = $direct_cachedata['output_cat']['title_alt']; }
-		else { $direct_settings['theme_output_page_title'] = $direct_cachedata['output_cat']['title']; }
-
-		if ($direct_cachedata['output_cat']['symbol']) { $f_cat_colspan = 3; }
-		else { $f_cat_colspan = 2; }
+		$direct_settings['theme_output_page_title'] = ((strlen ($direct_cachedata['output_cat']['title_alt'])) ? $direct_cachedata['output_cat']['title_alt'] : $direct_cachedata['output_cat']['title']);
+		$f_cat_colspan = ($direct_cachedata['output_cat']['symbol'] ? 3 : 2);
 
 $f_return = ("<table cellspacing='1' summary='' class='pageborder1' style='width:100%;table-layout:auto'>
 <thead class='pagehide'><tr>
@@ -100,9 +97,7 @@ $f_return = ("<table cellspacing='1' summary='' class='pageborder1' style='width
 		$f_return .= "<tr>";
 		if ($direct_cachedata['output_cat']['symbol']) { $f_return .= "\n<td valign='middle' align='left' class='pagebg' style='padding:$direct_settings[theme_td_padding]'><img src='{$direct_cachedata['output_cat']['symbol']}' border='0' alt='' title='' /></td>"; }
 		$f_return .= "\n<td valign='middle' align='left' class='pagebg' style='width:90%;padding:$direct_settings[theme_td_padding]'>";
-
-		if ($direct_cachedata['output_cat']['desc']) { $f_return .= "<span class='pagecontent'>{$direct_cachedata['output_cat']['desc']}</span>"; }
-		else { $f_return .= "<span class='pagecontent'>".(direct_local_get ("contentor_cat_desc_empty"))."</span>"; }
+		$f_return .= ($direct_cachedata['output_cat']['desc'] ? "<span class='pagecontent'>{$direct_cachedata['output_cat']['desc']}</span>" : "<span class='pagecontent'>".(direct_local_get ("contentor_cat_desc_empty"))."</span>");
 
 $f_return .= ("</td>
 <td align='center' class='pageextrabg' style='width:10%;padding:$direct_settings[theme_td_padding]'><span class='pageextracontent' style='font-size:10px'><span style='font-weight:bold'>".(direct_local_get ("contentor_docs")).":</span> {$direct_cachedata['output_cat']['docs']}</span></td>
@@ -142,19 +137,12 @@ function direct_output_oset_contentor_news_view ()
 
 	$direct_classes['basic_functions']->require_file ($direct_settings['path_system']."/osets/$direct_settings[theme_oset]/swgi_contentor.php");
 
-	if (!empty ($direct_cachedata['output_doc']))
-	{
-		if (strlen ($direct_cachedata['output_doc']['title_alt'])) { $direct_settings['theme_output_page_title'] = $direct_cachedata['output_doc']['title_alt']; }
-		else { $direct_settings['theme_output_page_title'] = $direct_cachedata['output_doc']['title']; }
-	}
+	if (!empty ($direct_cachedata['output_doc'])) { $direct_settings['theme_output_page_title'] = ((strlen ($direct_cachedata['output_doc']['title_alt'])) ? $direct_cachedata['output_doc']['title_alt'] : $direct_cachedata['output_doc']['title']); }
 
 	if (isset ($direct_cachedata['output_cat']))
 	{
-		if (strlen ($direct_cachedata['output_cat']['title_alt'])) { $f_cat_title = $direct_cachedata['output_cat']['title_alt']; }
-		else { $f_cat_title = $direct_cachedata['output_cat']['title']; }
-
-		if ($direct_cachedata['output_cat']['symbol']) { $f_cat_colspan = 3; }
-		else { $f_cat_colspan = 2; }
+		$f_cat_title = ((strlen ($direct_cachedata['output_cat']['title_alt'])) ? $direct_cachedata['output_cat']['title_alt'] : $direct_cachedata['output_cat']['title']);
+		$f_cat_colspan = ($direct_cachedata['output_cat']['symbol'] ? 3 : 2);
 
 $f_return = ("<table cellspacing='1' summary='' class='pageborder1' style='width:100%;table-layout:auto'>
 <thead><tr>
@@ -166,9 +154,7 @@ $f_return = ("<table cellspacing='1' summary='' class='pageborder1' style='width
 		$f_return .= "<tr>";
 		if ($direct_cachedata['output_cat']['symbol']) { $f_return .= "\n<td valign='middle' align='left' class='pagebg' style='padding:$direct_settings[theme_td_padding]'><img src='{$direct_cachedata['output_cat']['symbol']}' border='0' alt='' title='' /></td>"; }
 		$f_return .= "\n<td valign='middle' align='left' class='pagebg' style='width:90%;padding:$direct_settings[theme_td_padding]'>";
-
-		if ($direct_cachedata['output_cat']['desc']) { $f_return .= "<span class='pagecontent'>{$direct_cachedata['output_cat']['desc']}</span>"; }
-		else { $f_return .= "<span class='pagecontent'>".(direct_local_get ("contentor_cat_desc_empty"))."</span>"; }
+		$f_return .= ($direct_cachedata['output_cat']['desc'] ? "<span class='pagecontent'>{$direct_cachedata['output_cat']['desc']}</span>" : "<span class='pagecontent'>".(direct_local_get ("contentor_cat_desc_empty"))."</span>");
 
 $f_return .= ("</td>
 <td align='center' class='pageextrabg' style='width:10%;padding:$direct_settings[theme_td_padding]'><span class='pageextracontent' style='font-size:10px'><span style='font-weight:bold'>".(direct_local_get ("contentor_docs")).":</span> {$direct_cachedata['output_cat']['docs']}</span></td>
@@ -205,9 +191,7 @@ function direct_output_oset_contentor_news_versions ()
 	$direct_classes['basic_functions']->require_file ($direct_settings['path_system']."/osets/$direct_settings[theme_oset]/swgi_contentor.php");
 	$direct_settings['theme_output_page_title'] = direct_local_get ("contentor_docv_list");
 
-	if ($direct_cachedata['output_pages'] > 1) { $f_return = "\n<p class='pageborder2' style='text-align:center'><span class='pageextracontent' style='font-size:10px'>".(direct_output_pages_generator ($direct_cachedata['output_page_url'],$direct_cachedata['output_pages'],$direct_cachedata['output_page']))."</span></p>\n"; }
-	else { $f_return = ""; }
-
+	$f_return = (($direct_cachedata['output_pages'] > 1) ? "<p class='pageborder2' style='text-align:center'><span class='pageextracontent' style='font-size:10px'>".(direct_output_pages_generator ($direct_cachedata['output_page_url'],$direct_cachedata['output_pages'],$direct_cachedata['output_page']))."</span></p>\n" : "");
 	$f_return .= direct_contentor_oset_doc_versions_parse ($direct_cachedata['output_doc_versions']);
 	if ($direct_cachedata['output_pages'] > 1) { $f_return .= "\n<p class='pageborder2' style='text-align:center'><span class='pageextracontent' style='font-size:10px'>".(direct_output_pages_generator ($direct_cachedata['output_page_url'],$direct_cachedata['output_pages'],$direct_cachedata['output_page']))."</span></p>"; }
 
