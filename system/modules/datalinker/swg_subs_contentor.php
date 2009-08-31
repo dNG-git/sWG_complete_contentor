@@ -181,9 +181,9 @@ Save data edited
 			$g_task_array['datalinker_contentor_type'] = $direct_cachedata['i_dtype'];
 			direct_tmp_storage_write ($g_task_array,$g_tid,$g_task_array['core_sid'],"task_cache","evars",$direct_cachedata['core_time'],($direct_cachedata['core_time'] + 3600));
 
-			$g_source_url = urlencode (base64_encode ("m=datalinker&s=subs_contentor&a=new&dsd=tid+".$g_tid));
-			$g_target_url = urlencode (base64_encode ("m=datalinker&s=subs_contentor&a=new-selected&dsd=tid+{$g_tid}++[oid]"));
-			$direct_classes['output']->redirect (direct_linker ("url1","m=contentor&s=doc&a=new&dsd=ccid+{$g_task_array['datalinker_eid']}++ctype+{$direct_cachedata['i_dtype']}++source+{$g_source_url}++target+".$g_target_url,false));
+			$g_source = urlencode (base64_encode ("m=datalinker&s=subs_contentor&a=new&dsd=tid+".$g_tid));
+			$g_target = urlencode (base64_encode ("m=datalinker&s=subs_contentor&a=new-selected&dsd=tid+{$g_tid}++[oid]"));
+			$direct_classes['output']->redirect (direct_linker ("url1","m=contentor&s=doc&a=new&dsd=ccid+{$g_task_array['datalinker_eid']}++ctype+{$direct_cachedata['i_dtype']}++source+{$g_source}++target+".$g_target,false));
 		}
 		else
 		{
@@ -251,10 +251,9 @@ case "new-selected":
 			$g_task_array['datalinker_subs_new_selected_done'] = 1;
 
 			direct_tmp_storage_write ($g_task_array,$g_tid,$g_task_array['core_sid'],"task_cache","evars",$direct_cachedata['core_time'],($direct_cachedata['core_time'] + 3600));
-			// md5 ("datalinker")
 			$direct_classes['output']->redirect (direct_linker ("url1","m=datalinker&s=subs&a=new-selected&dsd=tid+".$g_tid,false));
 		}
-		else { $direct_classes['output']->redirect (direct_linker ("url1","m=datalinker&s=subs_contentor&a=select&dsd=tid+".$g_tid,false)); }
+		else { $direct_classes['output']->redirect (direct_linker ("url1","m=datalinker&s=subs_contentor&a=new&dsd=tid+".$g_tid,false)); }
 	}
 	else { $direct_classes['error_functions']->error_page ("standard","core_tid_invalid","sWG/#echo(__FILEPATH__)# _a=new-selected_ (#echo(__LINE__)#)"); }
 	//j// EOA
@@ -422,8 +421,6 @@ Save data edited
 				$g_task_array['search_words'] = $direct_cachedata['i_swords'];
  
 				direct_tmp_storage_write ($g_task_array,$g_tid,$g_task_array['core_sid'],"task_cache","evars",$direct_cachedata['core_time'],($direct_cachedata['core_time'] + 3600));
-				// md5 ("search")
-
 				$direct_classes['output']->redirect (direct_linker ("url1","m=dataport&s=swgap;search;selector&a=run&dsd=dtheme+1++tid+".$g_tid,false));
 			}
 			else
@@ -537,7 +534,6 @@ case "select-post":
 			$g_task_array['datalinker_subs_new_selected_done'] = 1;
 
 			direct_tmp_storage_write ($g_task_array,$g_tid,$g_task_array['core_sid'],"task_cache","evars",$direct_cachedata['core_time'],($direct_cachedata['core_time'] + 3600));
-			// md5 ("datalinker")
 			$direct_classes['output']->redirect (direct_linker ("url1","m=datalinker&s=subs&a=new-link&dsd=tid+".$g_tid,false));
 		}
 		else
@@ -548,6 +544,7 @@ case "select-post":
 				unset ($g_task_array['contentor_back_return']);
 			}
 
+			direct_tmp_storage_write ($g_task_array,$g_tid,$g_task_array['core_sid'],"task_cache","evars",$direct_cachedata['core_time'],($direct_cachedata['core_time'] + 3600));
 			$direct_classes['output']->redirect (direct_linker ("url1","m=datalinker&s=subs_contentor&a=select&dsd=tid+".$g_tid,false));
 		}
 	}
