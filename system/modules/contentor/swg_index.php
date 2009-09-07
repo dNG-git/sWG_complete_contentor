@@ -179,7 +179,7 @@ case "list":
 
 			if ((is_array ($g_subcats_array))&&(!empty ($g_subcats_array)))
 			{
-				foreach ($g_subcats_array as $g_subcat_object) { $direct_cachedata['output_cats'][] = $g_subcat_object->parse ("m=contentor&s=handbooks&a=[a]&dsd=[oid]"); }
+				foreach ($g_subcats_array as $g_subcat_object) { $direct_cachedata['output_cats'][] = $g_subcat_object->parse ("m=contentor&a=[a]&dsd=[oid]"); }
 			}
 		}
 
