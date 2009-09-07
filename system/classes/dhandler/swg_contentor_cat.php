@@ -510,7 +510,7 @@ $f_select_criteria = ("<sub1 type='sublevel'>
 			$this->define_extra_joins (array (array ("type" => "left-outer-join","table" => $direct_settings['contentor_cats_table'],"condition" => "<sqlconditions><element1 attribute='{$direct_settings['contentor_cats_table']}.ddbcontentor_cats_id' value='{$direct_settings['datalinker_table']}.ddbdatalinker_id_object' type='attribute' /></sqlconditions>")));
 			if (strlen ($this->data_doctype)) { $this->define_extra_conditions ($direct_classes['db']->define_row_conditions_encode ($direct_settings['contentor_cats_table'].".ddbcontentor_cats_doctype",$this->data_doctype,"string")); }
 
-			$this->class_cats[$f_cache_signature] =& parent::get_subs ("direct_contentor_cat",NULL,$this->data['ddbdatalinker_id_object'],"87ecbe0ba0a0b3c7e60030043614e655",1,$f_offset,$f_perpage,$f_sorting_mode);
+			$this->class_cats[$f_cache_signature] =& parent::get_subs ("direct_contentor_cat",NULL,$this->data['ddbdatalinker_id_object'],$this->data_sid,1,$f_offset,$f_perpage,$f_sorting_mode);
 			// md5 ("contentor")
 
 			$f_return =& $this->class_cats[$f_cache_signature];
