@@ -400,7 +400,7 @@ array ("type" => "left-outer-join","table" => $direct_settings['users_table']." 
 
 			$f_result_array = parent::get_aid ($f_attributes,$f_values);
 
-			if (($f_result_array)&&($f_result_array['ddbdatalinker_sid'] == $this->data_sid)&&(($f_result_array['ddbdatalinker_type'] == 2)||($f_result_array['ddbdatalinker_type'] == 3)))
+			if (($f_result_array)&&($f_result_array['ddbdatalinker_sid'] == $this->data_sid)&&(isset ($f_result_array['ddbcontentor_docs_id'])))
 			{
 				$this->data = $f_result_array;
 				$this->data_locked = ($this->data['ddbcontentor_docs_locked'] ? true : false);

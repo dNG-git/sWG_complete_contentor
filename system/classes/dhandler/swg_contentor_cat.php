@@ -341,7 +341,7 @@ Set up an additional variables :)
 			if (strlen ($this->data_doctype)) { $this->define_extra_conditions ($direct_classes['db']->define_row_conditions_encode ($direct_settings['contentor_cats_table'].".ddbcontentor_cats_doctype",$this->data_doctype,"string")); }
 			$f_result_array = parent::get_aid ($f_attributes,$f_values);
 
-			if (($f_result_array)&&($f_result_array['ddbdatalinker_sid'] == $this->data_sid)&&($f_result_array['ddbdatalinker_type'] == 1))
+			if (($f_result_array)&&($f_result_array['ddbdatalinker_sid'] == $this->data_sid)&&(isset ($f_result_array['ddbcontentor_cats_id'])))
 			{
 				$this->data = $f_result_array;
 				$this->data_locked = ($this->data['ddbcontentor_cats_locked'] ? true : false);
