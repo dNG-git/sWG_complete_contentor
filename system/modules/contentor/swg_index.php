@@ -163,8 +163,8 @@ case "list":
 		}
 		else
 		{
-			direct_class_init ("formtags");
 			$direct_classes['basic_functions']->require_file ($direct_settings['path_system']."/classes/swg_formtags.php");
+			direct_class_init ("formtags");
 		}
 
 		$g_connector = urlencode (base64_encode ("m=contentor&a=[a]&dsd=[oid]"));
@@ -274,8 +274,8 @@ case "versions":
 		}
 		else
 		{
-			direct_class_init ("formtags");
 			$direct_classes['basic_functions']->require_file ($direct_settings['path_system']."/classes/swg_formtags.php");
+			direct_class_init ("formtags");
 		}
 
 		if (!$g_datasub_check)
@@ -381,8 +381,8 @@ case "view":
 		}
 		else
 		{
-			direct_class_init ("formtags");
 			$direct_classes['basic_functions']->require_file ($direct_settings['path_system']."/classes/swg_formtags.php");
+			direct_class_init ("formtags");
 		}
 
 		$direct_cachedata['output_source'] = urlencode (base64_encode ($direct_cachedata['page_this']));

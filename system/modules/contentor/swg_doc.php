@@ -181,7 +181,6 @@ case "edit-save":
 
 		if (!$g_mode_save) { $direct_classes['kernel']->service_https ($direct_settings["contentor_https_{$g_doc_array['ddbcontentor_docs_doctype']}_edit"],$direct_cachedata['page_this']); }
 		$direct_classes['basic_functions']->require_file ($direct_settings['path_system']."/classes/swg_formbuilder_datetime.php");
-		$direct_classes['basic_functions']->require_file ($direct_settings['path_system']."/classes/swg_formtags.php");
 		$direct_classes['basic_functions']->require_file ($direct_settings['path_system']."/functions/swg_credits_manager.php");
 		$direct_classes['basic_functions']->require_file ($direct_settings['path_system']."/functions/swg_tmp_storager.php");
 
@@ -202,7 +201,11 @@ case "edit-save":
 			if ($g_datasub_check) { $direct_classes['formtags']->define_connector ("m=contentor&s=wiki&a=[a]&dsd=cdid+{$g_did}++[oid]"); }
 			else { $direct_classes['formtags']->define_connector ("m=contentor&s=wiki&a=[a]&dsd=ccid+{$g_cat_array['ddbdatalinker_id']}++[oid]"); }
 		}
-		else { direct_class_init ("formtags"); }
+		else
+		{
+			$direct_classes['basic_functions']->require_file ($direct_settings['path_system']."/classes/swg_formtags.php");
+			direct_class_init ("formtags");
+		}
 
 		direct_class_init ("output");
 		$direct_classes['output']->options_insert (2,"servicemenu",$direct_cachedata['page_backlink'],(direct_local_get ("core_back")),$direct_settings['serviceicon_default_back'],"url0");
@@ -811,7 +814,6 @@ case "new-save":
 
 		if (!$g_mode_save) { $direct_classes['kernel']->service_https ($direct_settings["contentor_https_{$g_type}_new"],$direct_cachedata['page_this']); }
 		$direct_classes['basic_functions']->require_file ($direct_settings['path_system']."/classes/swg_formbuilder_datetime.php");
-		$direct_classes['basic_functions']->require_file ($direct_settings['path_system']."/classes/swg_formtags.php");
 		$direct_classes['basic_functions']->require_file ($direct_settings['path_system']."/functions/swg_credits_manager.php");
 		$direct_classes['basic_functions']->require_file ($direct_settings['path_system']."/functions/swg_tmp_storager.php");
 
@@ -830,7 +832,11 @@ case "new-save":
 			direct_class_init ("formtags");
 			$direct_classes['formtags']->define_connector ("m=contentor&s=wiki&a=[a]&dsd=ccid+{$g_cid}++[oid]");
 		}
-		else { direct_class_init ("formtags"); }
+		else
+		{
+			$direct_classes['basic_functions']->require_file ($direct_settings['path_system']."/classes/swg_formtags.php");
+			direct_class_init ("formtags");
+		}
 
 		direct_class_init ("output");
 		$direct_classes['output']->options_insert (2,"servicemenu",$direct_cachedata['page_backlink'],(direct_local_get ("core_back")),$direct_settings['serviceicon_default_back'],"url0");
