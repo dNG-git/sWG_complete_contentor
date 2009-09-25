@@ -370,14 +370,16 @@ case "view":
 		direct_class_init ("output");
 		$direct_classes['output']->servicemenu ("contentor_".$g_type);
 
+		$direct_cachedata['output_source'] = urlencode (base64_encode ($direct_cachedata['page_this']));
+
 		if ($g_type == "wiki")
 		{
 			direct_local_integration ("contentor_wiki");
 			$direct_classes['basic_functions']->require_file ($direct_settings['path_system']."/classes/swg_formtags_wiki.php");
 			direct_class_init ("formtags");
 
-			if ($g_datasub_check) { $direct_classes['formtags']->define_connector ("m=contentor&s=wiki&a=[a]&dsd=cdid+{$g_did}++[oid]source+".(urlencode (base64_encode ($direct_cachedata['page_this'])))); }
-			else { $direct_classes['formtags']->define_connector ("m=contentor&s=wiki&a=[a]&dsd=ccid+{$g_cat_array['ddbdatalinker_id']}++[oid]source+".(urlencode (base64_encode ($direct_cachedata['page_this'])))); }
+			if ($g_datasub_check) { $direct_classes['formtags']->define_connector ("m=contentor&s=wiki&a=[a]&dsd=cdid+{$g_did}++[oid]source+".$direct_cachedata['output_source']); }
+			else { $direct_classes['formtags']->define_connector ("m=contentor&s=wiki&a=[a]&dsd=ccid+{$g_cat_array['ddbdatalinker_id']}++[oid]source+".$direct_cachedata['output_source']); }
 		}
 		else
 		{
@@ -385,7 +387,6 @@ case "view":
 			direct_class_init ("formtags");
 		}
 
-		$direct_cachedata['output_source'] = urlencode (base64_encode ($direct_cachedata['page_this']));
 		$g_connector = ($g_datasub_check ? "" : urlencode (base64_encode ("m=contentor&a=[a]&dsd=[oid]")));
 		$g_rights_check = false;
 

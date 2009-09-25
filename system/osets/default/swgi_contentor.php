@@ -289,7 +289,7 @@ $f_return .= ("</td>
 		if (($direct_cachedata['output_doc']['subs_allowed'])||($direct_cachedata['output_doc']['subs_available']))
 		{
 			$direct_classes['basic_functions']->require_file ($direct_settings['path_system']."/osets/$direct_settings[theme_oset]/swgi_datalinker_iview.php");
-			$f_return .= "\n<p class='pagecontenttitle'>{$direct_cachedata['output_doc']['subs_title']}</p>\n".(direct_datalinker_oset_iview_subs ($direct_cachedata['output_doc'],7,$direct_cachedata['output_source'],"default"));
+			$f_return .= "\n<p class='pagecontenttitle'>{$direct_cachedata['output_doc']['subs_title']}</p>\n".(direct_datalinker_oset_iview_subs ($direct_cachedata['output_doc'],7,$direct_cachedata['output_source'],NULL,"default"));
 		}
 	}
 
