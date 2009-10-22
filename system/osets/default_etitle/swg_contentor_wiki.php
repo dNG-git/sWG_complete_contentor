@@ -114,7 +114,7 @@ function direct_output_oset_contentor_wiki_view ()
 	else
 	{
 		$direct_settings['theme_output_page_title'] = ((strlen ($direct_cachedata['output_doc']['title_alt'])) ? $direct_cachedata['output_doc']['title_alt'] : $direct_cachedata['output_doc']['title']);
-		$f_return = direct_contentor_oset_doc_parse ("textonly");
+		$f_return = direct_contentor_oset_doc_parse ($direct_cachedata['output_doc'],$direct_cachedata['output_content'],$direct_cachedata['output_source'],$direct_cachedata['output_page'],$direct_cachedata['output_pages'],$direct_cachedata['output_pages_structure'],$direct_cachedata['output_pages_show'],"simple");
 	}
 
 	return $f_return;

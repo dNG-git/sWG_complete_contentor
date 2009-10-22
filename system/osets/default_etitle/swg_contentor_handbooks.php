@@ -87,20 +87,20 @@ function direct_output_oset_contentor_handbooks_list ()
 		$direct_settings['theme_output_page_title'] = ((strlen ($direct_cachedata['output_cat']['title_alt'])) ? $direct_cachedata['output_cat']['title_alt'] : $direct_cachedata['output_cat']['title']);
 		$f_cat_colspan = ($direct_cachedata['output_cat']['symbol'] ? 3 : 2);
 
-$f_return = ("<table cellspacing='1' summary='' class='pageborder1' style='width:100%;table-layout:auto'>
+$f_return = ("<table class='pageborder1' style='width:100%;table-layout:auto'>
 <thead class='pagehide'><tr>
-<td colspan='$f_cat_colspan' align='left' class='pagetitlecellbg' style='padding:$direct_settings[theme_td_padding]'><span class='pagetitlecellcontent'>{$direct_settings['theme_output_page_title']}</span></td>
+<td colspan='$f_cat_colspan' class='pagetitlecellbg' style='padding:$direct_settings[theme_td_padding];text-align:left'><span class='pagetitlecellcontent'>{$direct_settings['theme_output_page_title']}</span></td>
 </tr></thead><tbody>");
 
-		if ($direct_cachedata['output_cat']['pageurl_parent']) { $f_return .= "<tr>\n<td colspan='$f_cat_colspan' align='left' class='pagebg' style='padding:$direct_settings[theme_form_td_padding]'><span class='pagecontent' style='font-size:10px'><a href=\"{$direct_cachedata['output_cat']['pageurl_parent']}\" target='_self'>".(direct_local_get ("core_level_up"))."</a></span></td>\n</tr>"; }
+		if ($direct_cachedata['output_cat']['pageurl_parent']) { $f_return .= "<tr>\n<td colspan='$f_cat_colspan' class='pagebg' style='padding:$direct_settings[theme_form_td_padding];text-align:left'><span class='pagecontent' style='font-size:10px'><a href=\"{$direct_cachedata['output_cat']['pageurl_parent']}\" target='_self'>".(direct_local_get ("core_level_up"))."</a></span></td>\n</tr>"; }
 
 		$f_return .= "<tr>";
-		if ($direct_cachedata['output_cat']['symbol']) { $f_return .= "\n<td valign='middle' align='left' class='pagebg' style='padding:$direct_settings[theme_td_padding]'><img src='{$direct_cachedata['output_cat']['symbol']}' border='0' alt='' title='' /></td>"; }
-		$f_return .= "\n<td valign='middle' align='left' class='pagebg' style='width:90%;padding:$direct_settings[theme_td_padding]'>";
+		if ($direct_cachedata['output_cat']['symbol']) { $f_return .= "\n<td class='pagebg' style='padding:$direct_settings[theme_td_padding];text-align:left;vertical-align:middle'><img src='{$direct_cachedata['output_cat']['symbol']}' border='0' alt='' title='' /></td>"; }
+		$f_return .= "\n<td class='pagebg' style='width:90%;padding:$direct_settings[theme_td_padding];text-align:left;vertical-align:middle'>";
 		$f_return .= ($direct_cachedata['output_cat']['desc'] ? "<span class='pagecontent'>{$direct_cachedata['output_cat']['desc']}</span>" : "<span class='pagecontent'>".(direct_local_get ("contentor_cat_desc_empty"))."</span>");
 
 $f_return .= ("</td>
-<td align='center' class='pageextrabg' style='width:10%;padding:$direct_settings[theme_td_padding]'><span class='pageextracontent' style='font-size:10px'><span style='font-weight:bold'>".(direct_local_get ("contentor_docs")).":</span> {$direct_cachedata['output_cat']['docs']}</span></td>
+<td class='pageextrabg' style='width:10%;padding:$direct_settings[theme_td_padding];text-align:center'><span class='pageextracontent' style='font-size:10px'><span style='font-weight:bold'>".(direct_local_get ("contentor_docs")).":</span> {$direct_cachedata['output_cat']['docs']}</span></td>
 </tr></tbody>
 </table>");
 
@@ -144,20 +144,20 @@ function direct_output_oset_contentor_handbooks_view ()
 		$f_cat_title = ((strlen ($direct_cachedata['output_cat']['title_alt'])) ? $direct_cachedata['output_cat']['title_alt'] : $direct_cachedata['output_cat']['title']);
 		$f_cat_colspan = ($direct_cachedata['output_cat']['symbol'] ? 3 : 2);
 
-$f_return = ("<table cellspacing='1' summary='' class='pageborder1' style='width:100%;table-layout:auto'>
+$f_return = ("<table class='pageborder1' style='width:100%;table-layout:auto'>
 <thead><tr>
-<td colspan='$f_cat_colspan' align='left' class='pagetitlecellbg' style='padding:$direct_settings[theme_td_padding]'><span class='pagetitlecellcontent'><a href=\"{$direct_cachedata['output_cat']['pageurl']}\" target='_self'>$f_cat_title</a></span></td>
+<td colspan='$f_cat_colspan' class='pagetitlecellbg' style='padding:$direct_settings[theme_td_padding];text-align:left'><span class='pagetitlecellcontent'><a href=\"{$direct_cachedata['output_cat']['pageurl']}\" target='_self'>$f_cat_title</a></span></td>
 </tr></thead><tbody>");
 
-		if ($direct_cachedata['output_cat']['pageurl_parent']) { $f_return .= "<tr>\n<td colspan='$f_cat_colspan' align='left' class='pagebg' style='padding:$direct_settings[theme_form_td_padding]'><span class='pagecontent' style='font-size:10px'><a href=\"{$direct_cachedata['output_cat']['pageurl_parent']}\" target='_self'>".(direct_local_get ("core_level_up"))."</a></span></td>\n</tr>"; }
+		if ($direct_cachedata['output_cat']['pageurl_parent']) { $f_return .= "<tr>\n<td colspan='$f_cat_colspan' class='pagebg' style='padding:$direct_settings[theme_form_td_padding];text-align:left'><span class='pagecontent' style='font-size:10px'><a href=\"{$direct_cachedata['output_cat']['pageurl_parent']}\" target='_self'>".(direct_local_get ("core_level_up"))."</a></span></td>\n</tr>"; }
 
 		$f_return .= "<tr>";
-		if ($direct_cachedata['output_cat']['symbol']) { $f_return .= "\n<td valign='middle' align='left' class='pagebg' style='padding:$direct_settings[theme_td_padding]'><img src='{$direct_cachedata['output_cat']['symbol']}' border='0' alt='' title='' /></td>"; }
-		$f_return .= "\n<td valign='middle' align='left' class='pagebg' style='width:90%;padding:$direct_settings[theme_td_padding]'>";
+		if ($direct_cachedata['output_cat']['symbol']) { $f_return .= "\n<td class='pagebg' style='padding:$direct_settings[theme_td_padding];text-align:left;vertical-align:middle'><img src='{$direct_cachedata['output_cat']['symbol']}' border='0' alt='' title='' /></td>"; }
+		$f_return .= "\n<td class='pagebg' style='width:90%;padding:$direct_settings[theme_td_padding];text-align:left;vertical-align:middle'>";
 		$f_return .= ($direct_cachedata['output_cat']['desc'] ? "<span class='pagecontent'>{$direct_cachedata['output_cat']['desc']}</span>" : "<span class='pagecontent'>".(direct_local_get ("contentor_cat_desc_empty"))."</span>");
 
 $f_return .= ("</td>
-<td align='center' class='pageextrabg' style='width:10%;padding:$direct_settings[theme_td_padding]'><span class='pageextracontent' style='font-size:10px'><span style='font-weight:bold'>".(direct_local_get ("contentor_docs")).":</span> {$direct_cachedata['output_cat']['docs']}</span></td>
+<td class='pageextrabg' style='width:10%;padding:$direct_settings[theme_td_padding];text-align:center'><span class='pageextracontent' style='font-size:10px'><span style='font-weight:bold'>".(direct_local_get ("contentor_docs")).":</span> {$direct_cachedata['output_cat']['docs']}</span></td>
 </tr></tbody>
 </table>");
 	}
@@ -166,7 +166,7 @@ $f_return .= ("</td>
 	if (!empty ($direct_cachedata['output_doc']))
 	{
 		if (isset ($direct_cachedata['output_cat'])) { $f_return .= "<span style='font-size:8px'>&#0160;</span>"; }
-		$f_return .= direct_contentor_oset_doc_parse ();
+		$f_return .= direct_contentor_oset_doc_parse ($direct_cachedata['output_doc'],$direct_cachedata['output_content'],$direct_cachedata['output_source'],$direct_cachedata['output_page'],$direct_cachedata['output_pages'],$direct_cachedata['output_pages_structure'],$direct_cachedata['output_pages_show']);
 	}
 
 	if ($direct_cachedata['output_pages'] > 1) { $f_return .= "\n<p class='pageborder2' style='text-align:center'><span class='pageextracontent' style='font-size:10px'>".(direct_output_pages_generator ($direct_cachedata['output_page_url'],$direct_cachedata['output_pages'],$direct_cachedata['output_page']))."</span></p>"; }

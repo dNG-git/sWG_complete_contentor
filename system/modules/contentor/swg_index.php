@@ -98,8 +98,8 @@ case "list":
 {
 	if (USE_debug_reporting) { direct_debug (1,"sWG/#echo(__FILEPATH__)# _a=list_ (#echo(__LINE__)#)"); }
 
-	$g_cid_d = (isset ($direct_settings['dsd']['ccid_d']) ? ($direct_classes['basic_functions']->inputfilter_basic ($direct_settings['dsd']['ccid_d'])) : "");
-	$g_cid = (isset ($direct_settings['dsd']['ccid']) ? ($direct_classes['basic_functions']->inputfilter_basic ($direct_settings['dsd']['ccid'])) : $g_cid_d);
+	$g_cid = (isset ($direct_settings['dsd']['ccid_d']) ? ($direct_classes['basic_functions']->inputfilter_basic ($direct_settings['dsd']['ccid_d'])) : "");
+	$g_cid = (isset ($direct_settings['dsd']['ccid']) ? ($direct_classes['basic_functions']->inputfilter_basic ($direct_settings['dsd']['ccid'])) : $g_cid);
 	$g_type = (isset ($direct_settings['dsd']['ctype']) ? ($direct_classes['basic_functions']->inputfilter_basic ($direct_settings['dsd']['ctype'])) : "");
 	$direct_cachedata['output_page'] = (isset ($direct_settings['dsd']['page']) ? ($direct_classes['basic_functions']->inputfilter_number ($direct_settings['dsd']['page'])) : 1);
 
@@ -323,8 +323,8 @@ case "view":
 {
 	if (USE_debug_reporting) { direct_debug (1,"sWG/#echo(__FILEPATH__)# _a=view_ (#echo(__LINE__)#)"); }
 
-	$g_did_d = (isset ($direct_settings['dsd']['cdid_d']) ? ($direct_classes['basic_functions']->inputfilter_basic ($direct_settings['dsd']['cdid_d'])) : "");
-	$g_did = (isset ($direct_settings['dsd']['cdid']) ? ($direct_classes['basic_functions']->inputfilter_basic ($direct_settings['dsd']['cdid'])) : $g_did_d);
+	$g_did = (isset ($direct_settings['dsd']['cdid_d']) ? ($direct_classes['basic_functions']->inputfilter_basic ($direct_settings['dsd']['cdid_d'])) : "");
+	$g_did = (isset ($direct_settings['dsd']['cdid']) ? ($direct_classes['basic_functions']->inputfilter_basic ($direct_settings['dsd']['cdid'])) : $g_did);
 	$g_type = (isset ($direct_settings['dsd']['ctype']) ? ($direct_classes['basic_functions']->inputfilter_basic ($direct_settings['dsd']['ctype'])) : "");
 	$direct_cachedata['output_page'] = (isset ($direct_settings['dsd']['page']) ? ($direct_classes['basic_functions']->inputfilter_number ($direct_settings['dsd']['page'])) : 1);
 

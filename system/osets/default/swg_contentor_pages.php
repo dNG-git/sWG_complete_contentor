@@ -114,7 +114,7 @@ function direct_output_oset_contentor_pages_view ()
 	else
 	{
 		$f_return = ((strlen ($direct_cachedata['output_doc']['title_alt'])) ? "<p class='pagecontenttitle'>{$direct_cachedata['output_doc']['title_alt']}</p>\n" : "<p class='pagecontenttitle'>{$direct_cachedata['output_doc']['title']}</p>\n");
-		$f_return .= direct_contentor_oset_doc_parse ("textonly");
+		$f_return .= direct_contentor_oset_doc_parse ($direct_cachedata['output_doc'],$direct_cachedata['output_content'],$direct_cachedata['output_source'],$direct_cachedata['output_page'],$direct_cachedata['output_pages'],$direct_cachedata['output_pages_structure'],$direct_cachedata['output_pages_show'],"textonly");
 	}
 
 	return $f_return;

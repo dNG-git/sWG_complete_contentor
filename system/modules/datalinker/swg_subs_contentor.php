@@ -215,8 +215,8 @@ case "new-selected":
 {
 	if (USE_debug_reporting) { direct_debug (1,"sWG/#echo(__FILEPATH__)# _a=new-selected_ (#echo(__LINE__)#)"); }
 
-	$g_did_d = (isset ($direct_settings['dsd']['cdid_d']) ? ($direct_classes['basic_functions']->inputfilter_basic ($direct_settings['dsd']['cdid_d'])) : "");
-	$g_did = (isset ($direct_settings['dsd']['cdid']) ? ($direct_classes['basic_functions']->inputfilter_basic ($direct_settings['dsd']['cdid'])) : $g_did_d);
+	$g_did = (isset ($direct_settings['dsd']['cdid_d']) ? ($direct_classes['basic_functions']->inputfilter_basic ($direct_settings['dsd']['cdid_d'])) : "");
+	$g_did = (isset ($direct_settings['dsd']['cdid']) ? ($direct_classes['basic_functions']->inputfilter_basic ($direct_settings['dsd']['cdid'])) : $g_did);
 	$g_tid = (isset ($direct_settings['dsd']['tid']) ? ($direct_classes['basic_functions']->inputfilter_basic ($direct_settings['dsd']['tid'])) : "");
 
 	$direct_cachedata['page_this'] = "";

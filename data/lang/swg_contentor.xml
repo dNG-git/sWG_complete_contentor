@@ -19,4 +19,13 @@
 </types></contentor>
 </de>
 
+<de_formal>
+<contentor><types>
+<handbooks><string tid="0e67d28f9b174a90f1eba11dc62c6e5f" translation="Handbuch-Eintrag" /></handbooks>
+<news><string tid="6a86e66c2b687f47bc2cdba79c0b10c9" translation="News-Eintrag" /></news>
+<pages><string tid="93bdbd9b71722de72abfba1e304e7cba" translation="Webseite" /></pages>
+<wiki><string tid="af8f6175872816546ad8a4ebc6a0a101" translation="Wiki-Thema" /></wiki>
+</types></contentor>
+</de_formal>
+
 </swg_lang_file_v1>

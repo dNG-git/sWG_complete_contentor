@@ -168,9 +168,11 @@ Informing the system about available functions
 		$this->functions['define_lock'] = true;
 		$this->functions['define_readable'] = true;
 		$this->functions['define_writable'] = true;
+		$this->functions['delete'] = false;
 		$this->functions['get_docs'] = defined ("CLASS_direct_contentor_doc");
 		$this->functions['get_rights'] = true;
 		$this->functions['get_subcats'] = true;
+		$this->functions['insert_link'] = false;
 		$this->functions['is_diversity_dms'] = true;
 		$this->functions['is_locked'] = true;
 		$this->functions['is_moderated'] = true;
@@ -306,6 +308,23 @@ Set up an additional variables :)
 		else { $this->data_writable = false; }
 
 		return /*#ifdef(DEBUG):direct_debug (7,"sWG/#echo(__FILEPATH__)# -contentor_cat->define_writable ()- (#echo(__LINE__)#)",:#*/$this->data_writable/*#ifdef(DEBUG):,true):#*/;
+	}
+
+	//f// direct_contentor_cat->delete ($f_link_data = true,$f_data = true)
+/**
+	* Delete the object from the database.
+	*
+	* @param  boolean $f_link_data Delete *_datalinker if true
+	* @param  boolean $f_data Delete *_datalinkerd if true
+	* @uses   direct_debug()
+	* @uses   USE_debug_reporting
+	* @return boolean Always false; TODO: Code me
+	* @since  v0.1.00
+*/
+	public function delete ($f_link_data = true,$f_data = true)
+	{
+		if (USE_debug_reporting) { direct_debug (3,"sWG/#echo(__FILEPATH__)# -contentor_cat->delete (+f_link_data,+f_data)- (#echo(__LINE__)#)"); }
+		return /*#ifdef(DEBUG):direct_debug (7,"sWG/#echo(__FILEPATH__)# -contentor_cat->delete ()- (#echo(__LINE__)#)",:#*/false/*#ifdef(DEBUG):,true):#*/;
 	}
 
 	//f// direct_contentor_cat->get_aid ($f_attributes = NULL,$f_values = "")
@@ -517,6 +536,42 @@ $f_select_criteria = ("<sub1 type='sublevel'>
 		}
 
 		return /*#ifdef(DEBUG):direct_debug (7,"sWG/#echo(__FILEPATH__)# -contentor_cat->get_subcats ()- (#echo(__LINE__)#)",:#*/$f_return/*#ifdef(DEBUG):,true):#*/;
+	}
+
+	//f// direct_contentor_cat->insert ($f_insert_mode_deactivate = true)
+/**
+	* Writes new object data to the database.
+	*
+	* @param  boolean $f_insert_mode_deactivate Deactive insert mode after calling
+	*         update ()
+	* @uses   direct_contentor_cat::update()
+	* @uses   direct_debug()
+	* @uses   USE_debug_reporting
+	* @return boolean True on success
+	* @since  v0.1.00
+*/
+	public function insert ($f_insert_mode_deactivate = true)
+	{
+		if (USE_debug_reporting) { direct_debug (3,"sWG/#echo(__FILEPATH__)# -contentor_cat->insert (+f_insert_mode_deactivate)- (#echo(__LINE__)#)"); }
+		$this->data_insert_mode = true;
+		return /*#ifdef(DEBUG):direct_debug (7,"sWG/#echo(__FILEPATH__)# -contentor_cat->insert ()- (#echo(__LINE__)#)",(:#*/$this->update ($f_insert_mode_deactivate)/*#ifdef(DEBUG):),true):#*/;
+	}
+
+	//f// direct_contentor_cat->insert_link ($f_insert_mode_deactivate = true)
+/**
+	* Writes new object data to the database.
+	*
+	* @param  boolean $f_insert_mode_deactivate Deactive insert mode after calling
+	*         update ()
+	* @uses   direct_debug()
+	* @uses   USE_debug_reporting
+	* @return boolean Always false; this method is unsupported
+	* @since  v0.1.00
+*/
+	public function insert_link ($f_insert_mode_deactivate = true)
+	{
+		if (USE_debug_reporting) { direct_debug (3,"sWG/#echo(__FILEPATH__)# -contentor_cat->insert_link (+f_insert_mode_deactivate)- (#echo(__LINE__)#)"); }
+		return /*#ifdef(DEBUG):direct_debug (7,"sWG/#echo(__FILEPATH__)# -contentor_cat->insert_link ()- (#echo(__LINE__)#)",:#*/false/*#ifdef(DEBUG):,true):#*/;
 	}
 
 	//f// direct_contentor_cat->is_diversity_dms ()

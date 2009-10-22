@@ -515,14 +515,6 @@ Save data edited
 			$direct_cachedata['i_csticky'] = (((isset ($direct_cachedata['i_csticky']))&&($direct_cachedata['i_csticky'])) ? 1 : 0);
 			$direct_cachedata['i_clocked'] = (((isset ($direct_cachedata['i_clocked']))&&($direct_cachedata['i_clocked'])) ? 1 : 0);
 
-			if (!isset ($direct_cachedata['i_cgright']))
-			{
-				if ((!$g_datasub_check)&&($g_cat_array['ddbcontentor_cats_owner_group'])) { $direct_cachedata['i_cgright'] = (($g_cat_object->is_moderated ()) ? "r" : "w"); }
-				else { $direct_cachedata['i_cgright'] = "-"; }
-			}
-
-			if (!isset ($direct_cachedata['i_cpright'])) { $direct_cachedata['i_cpright'] = ((($g_doc_object->is_published ())&&(($g_datasub_check)||($g_cat_array['ddbcontentor_cats_public']))) ? "r" : "-"); }
-
 			$g_continue_check = (((!$g_datasub_check)&&($g_cat_object->is_writable_as_submission ())) ? true : direct_credits_payment_check (false,$direct_settings['contentor_doc_edit_credits_onetime']));
 
 			if ($g_continue_check)
@@ -663,6 +655,8 @@ Save data edited
 						$g_doc_array['ddbcontentor_docs_locked'] = $direct_cachedata['i_clocked'];
 						$g_doc_array['ddbcontentor_docs_public'] = (((!$g_datasub_check)&&($g_cat_object->is_writable_as_submission ())) ? 0 : $direct_cachedata['i_cpublic']);
 						$g_doc_array['ddbdata_data'] = $direct_cachedata['i_ctext'];
+						if (isset ($direct_cachedata['i_cgright'])) { $g_doc_array['ddbdata_mode_group'] = $direct_cachedata['i_cgright']; }
+						if (isset ($direct_cachedata['i_cpright'])) { $g_doc_array['ddbdata_mode_all'] = $direct_cachedata['i_cpright']; }
 
 						$g_continue_check = ($g_insert_check ? $g_doc_object->set_insert ($g_doc_array) : $g_doc_object->set_update ($g_doc_array));
 

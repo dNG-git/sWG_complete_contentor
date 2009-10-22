@@ -171,12 +171,14 @@ Informing the system about available functions
 		$this->functions['define_readable'] = true;
 		$this->functions['define_stick'] = true;
 		$this->functions['define_writable'] = true;
+		$this->functions['delete'] = false;
 		$this->functions['get_document_structure'] = true;
 		$this->functions['get_page'] = true;
 		$this->functions['get_pages'] = true;
 		$this->functions['get_rights'] = true;
 		$this->functions['get_structure'] = true;
 		$this->functions['get_versions'] = true;
+		$this->functions['insert_link'] = false;
 		$this->functions['is_locked'] = true;
 		$this->functions['is_published'] = true;
 		$this->functions['is_readable'] = true;
@@ -330,6 +332,23 @@ Set up an additional post class element :)
 		else { $this->data_writable = false; }
 
 		return /*#ifdef(DEBUG):direct_debug (7,"sWG/#echo(__FILEPATH__)# -contentor_doc->define_writable ()- (#echo(__LINE__)#)",:#*/$this->data_writable/*#ifdef(DEBUG):,true):#*/;
+	}
+
+	//f// direct_contentor_doc->delete ($f_link_data = true,$f_data = true)
+/**
+	* Delete the object from the database.
+	*
+	* @param  boolean $f_link_data Delete *_datalinker if true
+	* @param  boolean $f_data Delete *_datalinkerd if true
+	* @uses   direct_debug()
+	* @uses   USE_debug_reporting
+	* @return boolean Always false; TODO: Code me
+	* @since  v0.1.00
+*/
+	public function delete ($f_link_data = true,$f_data = true)
+	{
+		if (USE_debug_reporting) { direct_debug (3,"sWG/#echo(__FILEPATH__)# -contentor_doc->delete (+f_link_data,+f_data)- (#echo(__LINE__)#)"); }
+		return /*#ifdef(DEBUG):direct_debug (7,"sWG/#echo(__FILEPATH__)# -contentor_doc->delete ()- (#echo(__LINE__)#)",:#*/false/*#ifdef(DEBUG):,true):#*/;
 	}
 
 	//f// direct_contentor_doc->get ($f_did = "",$f_content = true,$f_load = true)
@@ -644,6 +663,23 @@ array ("type" => "left-outer-join","table" => $direct_settings['users_table']." 
 		return /*#ifdef(DEBUG):direct_debug (7,"sWG/#echo(__FILEPATH__)# -contentor_doc->get_docs ()- (#echo(__LINE__)#)",:#*/$f_return/*#ifdef(DEBUG):,true):#*/;
 	}
 
+	//f// direct_contentor_doc->insert_link ($f_insert_mode_deactivate = true)
+/**
+	* Writes new object data to the database.
+	*
+	* @param  boolean $f_insert_mode_deactivate Deactive insert mode after calling
+	*         update ()
+	* @uses   direct_debug()
+	* @uses   USE_debug_reporting
+	* @return boolean Always false; this method is unsupported
+	* @since  v0.1.00
+*/
+	public function insert_link ($f_insert_mode_deactivate = true)
+	{
+		if (USE_debug_reporting) { direct_debug (3,"sWG/#echo(__FILEPATH__)# -contentor_doc->insert_link (+f_insert_mode_deactivate)- (#echo(__LINE__)#)"); }
+		return /*#ifdef(DEBUG):direct_debug (7,"sWG/#echo(__FILEPATH__)# -contentor_doc->insert_link ()- (#echo(__LINE__)#)",:#*/false/*#ifdef(DEBUG):,true):#*/;
+	}
+
 	//f// direct_contentor_doc->is_locked ()
 /**
 	* Returns true if the document is locked.
@@ -805,6 +841,8 @@ array ("type" => "left-outer-join","table" => $direct_settings['users_table']." 
 				$f_return[$f_prefix."pageurl_main"] = direct_linker ($f_connector_type,$f_pageurl);
 			}
 			else { $f_return[$f_prefix."pageurl_main"] = ""; }
+
+			if (!$direct_settings['contentor_redirector_permalinks']) { $f_return[$f_prefix."pageurl_permalink"] = NULL; }
 
 			if (($this->data['ddbcontentor_docs_owner_id'])&&($this->data['owner_name']))
 			{
@@ -1246,6 +1284,8 @@ define ("CLASS_direct_contentor_doc",true);
 //j// Script specific commands
 
 if (!isset ($direct_settings['contentor_datacenter_path_symbols'])) { $direct_settings['contentor_datacenter_path_symbols'] = $direct_settings['path_themes']."/$direct_settings[theme]/"; }
+if (!isset ($direct_settings['redirector_permalinks'])) { $direct_settings['redirector_permalinks'] = false; }
+if (!isset ($direct_settings['contentor_redirector_permalinks'])) { $direct_settings['contentor_redirector_permalinks'] = $direct_settings['redirector_permalinks']; }
 if (!isset ($direct_settings['swg_auto_maintenance'])) { $direct_settings['swg_auto_maintenance'] = false; }
 if (!isset ($direct_settings['swg_ip_save2db'])) { $direct_settings['swg_ip_save2db'] = true; }
 }
